@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { ProducteditorComponent } from './page/producteditor/producteditor.compo
 import { CustomereditorComponent } from './page/customereditor/customereditor.component';
 import { OrdereditorComponent } from './page/ordereditor/ordereditor.component';
 import { BilleditorComponent } from './page/billeditor/billeditor.component';
+import { FilterPipe } from './pipe/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,16 @@ import { BilleditorComponent } from './page/billeditor/billeditor.component';
     CustomereditorComponent,
     OrdereditorComponent,
     BilleditorComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
+    FormsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

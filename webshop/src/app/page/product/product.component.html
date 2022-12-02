@@ -47,6 +47,7 @@
               >
                 active
               </th>
+              <th></th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
@@ -54,6 +55,7 @@
             <tr
               *ngFor="
                 let product of productList
+                  | filter : (phrase$ | async)
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >

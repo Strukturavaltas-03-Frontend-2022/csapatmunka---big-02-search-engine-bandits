@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Order } from 'src/app/model/order';
+import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 import { OrderService } from 'src/app/service/order.service';
 
 @Component({
@@ -10,12 +11,19 @@ import { OrderService } from 'src/app/service/order.service';
 })
 export class OrderComponent implements OnInit {
   orderService: OrderService = inject(OrderService);
+  configService: ConfigService = inject(ConfigService);
 
   orderList$: Observable<Order[]> = this.orderService.getAll();
 
   //paginator
   page: number = 1;
   orderList: Order[] = [];
+
+  //searcher
+  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+
+  //thead
+  columns: ITableColumn[] = this.configService.orderTableColumns;
 
   constructor() {}
 

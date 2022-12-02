@@ -32,6 +32,7 @@
               >
                 active
               </th>
+              <th></th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
@@ -39,6 +40,7 @@
             <tr
               *ngFor="
                 let customer of customerList
+                  | filter : (phrase$ | async)
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from 'src/app/model/product';
+import { ConfigService } from 'src/app/service/config.service';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -10,12 +11,16 @@ import { ProductService } from 'src/app/service/product.service';
 })
 export class ProductComponent implements OnInit {
   productService: ProductService = inject(ProductService);
+  configService: ConfigService = inject(ConfigService);
 
   productList$: Observable<Product[]> = this.productService.getAll();
 
   //paginator
   page: number = 1;
   productList: Product[] = [];
+
+  //searcher
+  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
 
   constructor() {}
 

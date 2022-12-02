@@ -1,3 +1,4 @@
+{{ phrase$ | async }}
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -6,32 +7,20 @@
           <div
             class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
           >
-            <h6 class="text-white text-capitalize ps-3">Authors table</h6>
+            <h6 class="text-white text-capitalize ps-3">Bills table</h6>
           </div>
         </div>
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
               <th
+                *ngFor="let col of columns"
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               >
-                id
+                {{ col.title }}
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-              >
-                orderID
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-              >
-                amount
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                status
-              </th>
+              <th></th>
+              <th></th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
@@ -39,32 +28,38 @@
             <tr
               *ngFor="
                 let bill of billList
+                  | filter : (phrase$ | async)
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
-              <td class="align-middle text-center text-sm">
-                <!-- id -->
-                <p class="text-xs font-weight-bold mb-0">{{ bill.id }}</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <!-- orderID -->
-                <p class="text-xs font-weight-bold mb-0">{{ bill.orderID }}</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <!-- amount -->
-                <p class="text-xs font-weight-bold mb-0">{{ bill.amount }}</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  *ngIf="bill.status === 'paid'"
-                  class="badge badge-sm bg-gradient-success"
-                  >{{ bill.status }}</span
+              <td
+                *ngFor="let col of columns"
+                class="align-middle text-center text-sm"
+              >
+                <!-- !status -->
+                <p
+                  *ngIf="col.key !== 'status'"
+                  class="text-xs font-weight-bold mb-0"
                 >
-                <span
-                  *ngIf="bill.status === 'new'"
-                  class="badge badge-sm bg-gradient-danger"
-                  >{{ bill.status }}</span
+                  {{ bill[col.key] }}
+                </p>
+
+                <!-- status -->
+                <p
+                  *ngIf="col.key === 'status'"
+                  class="text-xs font-weight-bold mb-0"
                 >
+                  <span
+                    *ngIf="bill.status === 'paid'"
+                    class="badge badge-sm bg-gradient-success"
+                    >{{ bill.status }}</span
+                  >
+                  <span
+                    *ngIf="bill.status === 'new'"
+                    class="badge badge-sm bg-gradient-danger"
+                    >{{ bill.status }}</span
+                  >
+                </p>
               </td>
               <td class="align-middle">
                 <a

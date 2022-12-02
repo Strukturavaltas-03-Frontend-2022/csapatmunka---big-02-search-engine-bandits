@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
 import { BillService } from 'src/app/service/bill.service';
+import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 
 @Component({
   selector: 'app-bill',
@@ -10,10 +11,17 @@ import { BillService } from 'src/app/service/bill.service';
 })
 export class BillComponent implements OnInit {
   billService: BillService = inject(BillService);
+  configService: ConfigService = inject(ConfigService);
 
   //paginator
   page: number = 1;
   billList: Bill[] = [];
+
+  //searcher
+  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+
+  //thead
+  columns: ITableColumn[] = this.configService.billTableColumns;
 
   constructor() {}
 
@@ -21,6 +29,8 @@ export class BillComponent implements OnInit {
     this.billService
       .getAll()
       .subscribe((dataList) => (this.billList = dataList));
+
+    this.configService.searchPhrase$.next('');
   }
 
   //delete method

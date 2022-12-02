@@ -32,11 +32,11 @@ const routes: Routes = [
     component: ProductComponent,
   },
   {
-    path: 'edit/products',
+    path: 'edit/product',
     component: ProducteditorComponent,
   },
   {
-    path: 'edit/products/:id',
+    path: 'edit/product/:id',
     component: ProducteditorComponent,
   },
   {
