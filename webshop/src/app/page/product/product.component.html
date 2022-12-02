@@ -1,0 +1,136 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div
+            class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
+          >
+            <h6 class="text-white text-capitalize ps-3">Authors table</h6>
+          </div>
+        </div>
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+              >
+                id
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+              >
+                name / type
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                catID
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                description
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                price
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                featured
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                active
+              </th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of productList$ | async">
+              <td class="align-middle text-center text-sm">
+                <!-- id -->
+                <p class="text-xs font-weight-bold mb-0">{{ product.id }}</p>
+              </td>
+              <td>
+                <!-- name/type td -->
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      {{ product.name }}
+                    </h6>
+                    <p class="text-xs text-secondary mb-0">
+                      {{ product.type }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <!-- catId -->
+                <p class="text-xs font-weight-bold mb-0">{{ product.catID }}</p>
+              </td>
+              <td>
+                <!-- description -->
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ product.description }}
+                </p>
+              </td>
+
+              <td class="align-middle text-center text-sm">
+                <!-- price -->
+                <p class="text-xs font-weight-bold mb-0">{{ product.price }}</p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span
+                  *ngIf="product.featured"
+                  class="badge badge-sm bg-gradient-success"
+                  >Active</span
+                >
+                <span
+                  *ngIf="!product.featured"
+                  class="badge badge-sm bg-gradient-danger"
+                  >Inactive</span
+                >
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span
+                  *ngIf="product.active"
+                  class="badge badge-sm bg-gradient-success"
+                  >Active</span
+                >
+                <span
+                  *ngIf="!product.active"
+                  class="badge badge-sm bg-gradient-danger"
+                  >Inactive</span
+                >
+              </td>
+
+              <td class="align-middle">
+                <a
+                  [routerLink]="['/edit/product/', product.id]"
+                  href="javascript:;"
+                  class="text-secondary font-weight-bold text-xs"
+                >
+                  Edit
+                </a>
+              </td>
+              <td class="align-middle">
+                <a
+                  (click)="removeBill(product)"
+                  class="text-secondary font-weight-bold text-xs"
+                  href="javascript:;"
+                >
+                  Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

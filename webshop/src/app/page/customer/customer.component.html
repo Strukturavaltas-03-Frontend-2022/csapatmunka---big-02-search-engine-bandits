@@ -1,0 +1,103 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div
+            class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
+          >
+            <h6 class="text-white text-capitalize ps-3">Authors table</h6>
+          </div>
+        </div>
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+              >
+                id
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+              >
+                name / e-mail
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                address
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                active
+              </th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of customerList$ | async">
+              <td class="align-middle text-center text-sm">
+                <!-- id -->
+                <p class="text-xs font-weight-bold mb-0">{{ customer.id }}</p>
+              </td>
+              <td>
+                <!-- name/email td -->
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      {{ customer.firstName }} {{ customer.lastName }}
+                    </h6>
+                    <p class="text-xs text-secondary mb-0">
+                      {{ customer.email }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <!-- address -->
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ customer.address.country }}
+                </p>
+                <p class="text-xs text-secondary mb-0">
+                  {{ customer.address.zip }}, {{ customer.address.city }},
+                  {{ customer.address.street }} {{ customer.address.notes }}
+                </p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span
+                  *ngIf="customer.active"
+                  class="badge badge-sm bg-gradient-success"
+                  >Active</span
+                >
+                <span
+                  *ngIf="!customer.active"
+                  class="badge badge-sm bg-gradient-danger"
+                  >Inactive</span
+                >
+              </td>
+              <td class="align-middle">
+                <a
+                  [routerLink]="['/edit/customer/', customer.id]"
+                  href="javascript:;"
+                  class="text-secondary font-weight-bold text-xs"
+                >
+                  Edit
+                </a>
+              </td>
+              <td class="align-middle">
+                <a
+                  (click)="removeBill(customer)"
+                  class="text-secondary font-weight-bold text-xs"
+                  href="javascript:;"
+                >
+                  Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

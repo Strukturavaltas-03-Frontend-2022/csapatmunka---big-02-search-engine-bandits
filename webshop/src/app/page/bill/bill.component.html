@@ -1,0 +1,88 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div
+            class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
+          >
+            <h6 class="text-white text-capitalize ps-3">Authors table</h6>
+          </div>
+        </div>
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+              >
+                id
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+              >
+                orderID
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+              >
+                amount
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                status
+              </th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bill of billList$ | async">
+              <td class="align-middle text-center text-sm">
+                <!-- id -->
+                <p class="text-xs font-weight-bold mb-0">{{ bill.id }}</p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <!-- orderID -->
+                <p class="text-xs font-weight-bold mb-0">{{ bill.orderID }}</p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <!-- amount -->
+                <p class="text-xs font-weight-bold mb-0">{{ bill.amount }}</p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span
+                  *ngIf="bill.status === 'paid'"
+                  class="badge badge-sm bg-gradient-success"
+                  >{{ bill.status }}</span
+                >
+                <span
+                  *ngIf="bill.status === 'new'"
+                  class="badge badge-sm bg-gradient-danger"
+                  >{{ bill.status }}</span
+                >
+              </td>
+              <td class="align-middle">
+                <a
+                  [routerLink]="['/edit/bill/', bill.id]"
+                  href="javascript:;"
+                  class="text-secondary font-weight-bold text-xs"
+                >
+                  Edit
+                </a>
+              </td>
+              <td class="align-middle">
+                <a
+                  (click)="removeBill(bill)"
+                  class="text-secondary font-weight-bold text-xs"
+                  href="javascript:;"
+                >
+                  Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
