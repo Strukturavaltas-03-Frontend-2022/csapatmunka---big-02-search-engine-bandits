@@ -36,7 +36,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let bill of billList$ | async">
+            <tr
+              *ngFor="
+                let bill of billList
+                  | paginate : { itemsPerPage: 10, currentPage: page }
+              "
+            >
               <td class="align-middle text-center text-sm">
                 <!-- id -->
                 <p class="text-xs font-weight-bold mb-0">{{ bill.id }}</p>
@@ -86,3 +91,5 @@
     </div>
   </div>
 </div>
+
+<pagination-controls (pageChange)="page = $event"></pagination-controls>

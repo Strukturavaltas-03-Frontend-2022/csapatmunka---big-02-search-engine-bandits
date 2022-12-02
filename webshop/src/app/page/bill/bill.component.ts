@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
 import { BillService } from 'src/app/service/bill.service';
@@ -8,13 +8,22 @@ import { BillService } from 'src/app/service/bill.service';
   templateUrl: './bill.component.html',
   styleUrls: ['./bill.component.scss'],
 })
-export class BillComponent {
+export class BillComponent implements OnInit {
   billService: BillService = inject(BillService);
 
-  billList$: Observable<Bill[]> = this.billService.getAll();
+  //paginator
+  page: number = 1;
+  billList: Bill[] = [];
 
   constructor() {}
 
+  ngOnInit(): void {
+    this.billService
+      .getAll()
+      .subscribe((dataList) => (this.billList = dataList));
+  }
+
+  //delete method
   removeBill(bill: Bill): void {
     if (confirm('Are you sure?')) {
       this.billService
