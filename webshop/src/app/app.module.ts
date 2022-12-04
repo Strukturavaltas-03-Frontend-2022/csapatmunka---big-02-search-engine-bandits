@@ -18,6 +18,9 @@ import { CustomereditorComponent } from './page/customereditor/customereditor.co
 import { OrdereditorComponent } from './page/ordereditor/ordereditor.component';
 import { BilleditorComponent } from './page/billeditor/billeditor.component';
 import { FilterPipe } from './pipe/filter.pipe';
+import { SumPipe } from './pipe/sum.pipe';
+import { CounterPipe } from './pipe/counter.pipe';
+import { IdconverterPipe } from './pipe/idconverter.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { FilterPipe } from './pipe/filter.pipe';
     OrdereditorComponent,
     BilleditorComponent,
     FilterPipe,
+    SumPipe,
+    CounterPipe,
+    IdconverterPipe,
   ],
   imports: [
     BrowserModule,

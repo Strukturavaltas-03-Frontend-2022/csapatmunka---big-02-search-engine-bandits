@@ -1,8 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
+import { Product } from 'src/app/model/product';
 import { ConfigService, ITableColumn } from 'src/app/service/config.service';
+import { CustomerService } from 'src/app/service/customer.service';
 import { OrderService } from 'src/app/service/order.service';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
   selector: 'app-order',
@@ -11,9 +15,17 @@ import { OrderService } from 'src/app/service/order.service';
 })
 export class OrderComponent implements OnInit {
   orderService: OrderService = inject(OrderService);
+  customerService: CustomerService = inject(CustomerService);
+  productService: ProductService = inject(ProductService);
   configService: ConfigService = inject(ConfigService);
 
   orderList$: Observable<Order[]> = this.orderService.getAll();
+
+  //idconverter
+  customerList$: Observable<Customer[]> = this.customerService.getAll();
+  customerList: Customer[] = [];
+  productList$: Observable<Product[]> = this.productService.getAll();
+  productList: Product[] = [];
 
   //paginator
   page: number = 1;
@@ -31,6 +43,14 @@ export class OrderComponent implements OnInit {
     this.orderService
       .getAll()
       .subscribe((dataList) => (this.orderList = dataList));
+
+    this.customerService
+      .getAll()
+      .subscribe((dataList) => (this.customerList = dataList));
+
+    this.productService
+      .getAll()
+      .subscribe((dataList) => (this.productList = dataList));
   }
 
   removeBill(order: Order): void {

@@ -80,6 +80,24 @@
                 </a>
               </td>
             </tr>
+            <tr>
+              <td class="align-middle text-center text-sm">
+                All bill:<strong> {{ billList.length }}</strong>
+              </td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+                Expected Income:
+                <strong>{{ billList | sum : "amount" }}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-danger">New:</span>
+                <strong> {{ billList | counter : "status" : "new" }}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-success">Paid:</span>
+                <strong> {{ billList | counter : "status" : "paid" }}</strong>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

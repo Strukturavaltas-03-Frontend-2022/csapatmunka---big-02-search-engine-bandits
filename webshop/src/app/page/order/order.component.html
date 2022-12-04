@@ -37,10 +37,32 @@
               >
                 <!-- !status -->
                 <p
-                  *ngIf="col.key !== 'status'"
                   class="text-xs font-weight-bold mb-0"
+                  [ngSwitch]="order[col.key]"
                 >
-                  {{ order[col.key] }}
+                  <span *ngSwitchCase="order.customerID">{{
+                    customerList[order[col.key]].firstName +
+                      " " +
+                      customerList[order[col.key]].lastName +
+                      " " +
+                      "(" +
+                      "id: " +
+                      order[col.key] +
+                      ")"
+                  }}</span>
+                  <span *ngSwitchCase="order.productID">{{
+                    productList[order[col.key]].name +
+                      " " +
+                      productList[order[col.key]].type +
+                      " " +
+                      "(" +
+                      "id: " +
+                      order[col.key] +
+                      ")"
+                  }}</span>
+                  <span *ngSwitchDefault="order[col.key]">{{
+                    order[col.key]
+                  }}</span>
                 </p>
 
                 <!-- status -->
@@ -82,6 +104,31 @@
                 >
                   Delete
                 </a>
+              </td>
+            </tr>
+            <tr>
+              <td class="align-middle text-center text-sm">
+                All order:<strong> {{ orderList.length }}</strong>
+              </td>
+              <td></td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+                All ordered car:
+                <strong>{{ orderList | sum : "amount" }}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-danger">New:</span>
+                <strong> {{ orderList | counter : "status" : "new" }}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-warning">Shipped:</span>
+                <strong>
+                  {{ orderList | counter : "status" : "shipped" }}</strong
+                >
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-success">Paid:</span>
+                <strong> {{ orderList | counter : "status" : "paid" }}</strong>
               </td>
             </tr>
           </tbody>
