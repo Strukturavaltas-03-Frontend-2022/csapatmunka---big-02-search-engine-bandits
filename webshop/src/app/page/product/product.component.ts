@@ -27,7 +27,7 @@ export class ProductComponent implements OnInit {
   columns: ITableColumn[] = this.configService.productTableColumns;
 
   //catId
-  category: Category[] = this.configService.catId;
+  category: Category[] = this.configService.categoryID;
 
   constructor() {}
 

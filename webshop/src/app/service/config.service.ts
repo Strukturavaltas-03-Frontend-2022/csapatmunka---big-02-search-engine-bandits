@@ -51,7 +51,7 @@ export class ConfigService {
     { title: 'Available', key: 'active' },
   ];
 
-  catId: Category[] = [
+  categoryID: Category[] = [
     {
       id: 1,
       name: 'Petrol',
