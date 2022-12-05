@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
-import { ConfigService } from 'src/app/service/config.service';
+import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
@@ -21,6 +21,9 @@ export class CustomerComponent implements OnInit {
 
   //searcher
   phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+
+  //thead
+  columns: ITableColumn[] = this.configService.customerTableColumns;
 
   constructor() {}
 

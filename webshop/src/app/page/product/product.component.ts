@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Category } from 'src/app/model/category';
 import { Product } from 'src/app/model/product';
-import { ConfigService } from 'src/app/service/config.service';
+import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -21,6 +22,12 @@ export class ProductComponent implements OnInit {
 
   //searcher
   phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+
+  //thead
+  columns: ITableColumn[] = this.configService.productTableColumns;
+
+  //catId
+  category: Category[] = this.configService.catId;
 
   constructor() {}
 

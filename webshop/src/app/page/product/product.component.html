@@ -13,40 +13,12 @@
           <thead>
             <tr>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+                *ngFor="let col of columns"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
-                id
+                {{ col.title }}
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                name / type
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                catID
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                description
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                price
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                featured
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                active
-              </th>
+              <th></th>
               <th></th>
               <th class="text-secondary opacity-7"></th>
             </tr>
@@ -59,12 +31,37 @@
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
+              <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
+                <p
+                  class="text-xs font-weight-bold mb-0"
+                  [ngSwitch]="product[col.key]"
+                >
+                  <span *ngSwitchCase="product.id">
+                    <span>{{ product.id }}</span>
+                  </span>
+                  <span *ngSwitchCase="product.name">
+                    <span>{{ product.name }}</span>
+                    <br />
+                    <span class="text-xs text-secondary mb-0">{{
+                      product.type
+                    }}</span>
+                  </span>
+                  <span *ngSwitchCase="product.catID"
+                    >{{ category[product.catID - 1].name }}
+                  </span>
+                  <span *ngSwitchDefault="product[col.key]">{{
+                    product[col.key]
+                  }}</span>
+                </p>
+              </td>
+              <!-- <td
+                *ngFor="let col of columns"
+                class="align-middle text-center text-sm"
+              ></td>
               <td class="align-middle text-center text-sm">
-                <!-- id -->
                 <p class="text-xs font-weight-bold mb-0">{{ product.id }}</p>
               </td>
               <td>
-                <!-- name/type td -->
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">
@@ -77,18 +74,15 @@
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
-                <!-- catId -->
                 <p class="text-xs font-weight-bold mb-0">{{ product.catID }}</p>
               </td>
               <td>
-                <!-- description -->
                 <p class="text-xs font-weight-bold mb-0">
                   {{ product.description }}
                 </p>
               </td>
 
               <td class="align-middle text-center text-sm">
-                <!-- price -->
                 <p class="text-xs font-weight-bold mb-0">{{ product.price }}</p>
               </td>
               <td class="align-middle text-center text-sm">
@@ -114,7 +108,7 @@
                   class="badge badge-sm bg-gradient-danger"
                   >Inactive</span
                 >
-              </td>
+              </td> -->
 
               <td class="align-middle">
                 <a

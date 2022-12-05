@@ -13,25 +13,12 @@
           <thead>
             <tr>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+                *ngFor="let col of columns"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
-                id
+                {{ col.title }}
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                name / e-mail
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                address
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                active
-              </th>
+              <th></th>
               <th></th>
               <th class="text-secondary opacity-7"></th>
             </tr>
@@ -44,12 +31,54 @@
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
-              <td class="align-middle text-center text-sm">
-                <!-- id -->
+              <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
+                <p
+                  class="text-xs font-weight-bold mb-0"
+                  [ngSwitch]="customer[col.key]"
+                >
+                  <span *ngSwitchCase="customer.lastName">
+                    <span class="mb-0 text-sm"
+                      >{{ customer.firstName }} {{ customer.lastName }}</span
+                    ><br />
+                    <span class="text-xs text-secondary mb-0">{{
+                      customer.email
+                    }}</span>
+                  </span>
+                  <span *ngSwitchCase="customer.address">
+                    <span class="mb-0 text-sm">{{
+                      customer.address.country
+                    }}</span
+                    ><br />
+                    <!-- Viktor miatt nem jelenítjük meg a Nodes-t, mert semmi értelmét nem látja a táblázatban való megjelenítésnek :) -->
+                    <span class="text-xs text-secondary mb-0"
+                      >{{ customer.address.zip }}, {{ customer.address.city }},
+                      {{ customer.address.street }}</span
+                    >
+                  </span>
+                  <span *ngSwitchCase="customer.active"
+                    ><span
+                      *ngIf="customer.active === true"
+                      class="badge badge-sm bg-gradient-success"
+                      >Active</span
+                    >
+                  </span>
+                  <span *ngSwitchCase="customer.active"
+                    ><span
+                      *ngIf="customer.active === false"
+                      class="badge badge-sm bg-gradient-danger"
+                      >Inactive</span
+                    >
+                  </span>
+                  <span *ngSwitchDefault="customer[col.key]">{{
+                    customer[col.key]
+                  }}</span>
+                </p>
+              </td>
+
+              <!-- <td class="align-middle text-center text-sm">
                 <p class="text-xs font-weight-bold mb-0">{{ customer.id }}</p>
               </td>
               <td>
-                <!-- name/email td -->
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">
@@ -62,7 +91,6 @@
                 </div>
               </td>
               <td>
-                <!-- address -->
                 <p class="text-xs font-weight-bold mb-0">
                   {{ customer.address.country }}
                 </p>
@@ -82,7 +110,7 @@
                   class="badge badge-sm bg-gradient-danger"
                   >Inactive</span
                 >
-              </td>
+              </td> -->
               <td class="align-middle">
                 <a
                   [routerLink]="['/edit/customer/', customer.id]"

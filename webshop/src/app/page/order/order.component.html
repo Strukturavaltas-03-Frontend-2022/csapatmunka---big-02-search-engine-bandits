@@ -14,7 +14,7 @@
             <tr>
               <th
                 *ngFor="let col of columns"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
                 {{ col.title }}
               </th>
@@ -31,11 +31,8 @@
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
-              <td
-                *ngFor="let col of columns"
-                class="align-middle text-center text-sm"
-              >
-                <!-- !status -->
+              <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
+                <!-- !status Csaba maitt jelenítjük meg az ID-ket, én tudom, hogy csúnya, de hajthatatlan volt (Viktor) -->
                 <p
                   class="text-xs font-weight-bold mb-0"
                   [ngSwitch]="order[col.key]"
@@ -60,31 +57,30 @@
                       order[col.key] +
                       ")"
                   }}</span>
+                  <span *ngSwitchCase="order.status"
+                    ><span
+                      *ngIf="order.status === 'paid'"
+                      class="badge badge-sm bg-gradient-success"
+                      >Paid</span
+                    >
+                  </span>
+                  <span *ngSwitchCase="order.status"
+                    ><span
+                      *ngIf="order.status === 'shipped'"
+                      class="badge badge-sm bg-gradient-warning"
+                      >Shipped</span
+                    >
+                  </span>
+                  <span *ngSwitchCase="order.status"
+                    ><span
+                      *ngIf="order.status === 'new'"
+                      class="badge badge-sm bg-gradient-danger"
+                      >New</span
+                    >
+                  </span>
                   <span *ngSwitchDefault="order[col.key]">{{
                     order[col.key]
                   }}</span>
-                </p>
-
-                <!-- status -->
-                <p
-                  *ngIf="col.key === 'status'"
-                  class="text-xs font-weight-bold mb-0"
-                >
-                  <span
-                    *ngIf="order.status === 'paid'"
-                    class="badge badge-sm bg-gradient-success"
-                    >{{ order.status }}</span
-                  >
-                  <span
-                    *ngIf="order.status === 'new'"
-                    class="badge badge-sm bg-gradient-danger"
-                    >{{ order.status }}</span
-                  >
-                  <span
-                    *ngIf="order.status === 'shipped'"
-                    class="badge badge-sm bg-gradient-warning"
-                    >{{ order.status }}</span
-                  >
                 </p>
               </td>
               <td class="align-middle">
