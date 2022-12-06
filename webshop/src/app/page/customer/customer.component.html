@@ -59,14 +59,14 @@
                   </span>
                   <span *ngSwitchCase="customer.active"
                     ><span
-                      *ngIf="customer.active === true"
+                      *ngIf="customer.active === true && col.key === 'active'"
                       class="badge badge-sm bg-gradient-success"
                       >Active</span
                     >
                   </span>
                   <span *ngSwitchCase="customer.active"
                     ><span
-                      *ngIf="customer.active === false"
+                      *ngIf="customer.active === false && col.key === 'active'"
                       class="badge badge-sm bg-gradient-danger"
                       >Inactive</span
                     >
