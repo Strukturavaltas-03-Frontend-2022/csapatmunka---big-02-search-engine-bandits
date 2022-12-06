@@ -1,1 +1,253 @@
-<pre>{{ customer | json }}</pre>
+<div class="mt-4 p-5 text-white rounded mt-3 jumbotron">
+  <h1 class="hotstitle">Customer Editor</h1>
+  <form
+    (ngSubmit)="onSubmit(customer)"
+    #customerForm="ngForm"
+    *ngIf="customer$"
+    class="row g-3"
+  >
+    <div class="col-lg-1">
+      <label for="id" class="form-label formtext">Id</label>
+      <input
+        [(ngModel)]="customer.id"
+        #id="ngModel"
+        name="id"
+        type="text"
+        class="form-control formtext"
+        id="id"
+      />
+    </div>
+    <div class="col-lg-6">
+      <label for="fName" class="form-label formtext">Customer first name</label>
+      <input
+        [disabled]="checked"
+        [(ngModel)]="customer.firstName"
+        #cFirstname="ngModel"
+        name="fName"
+        type="text"
+        class="form-control formtext"
+        id="fName"
+        pattern=".{1,10}"
+        required
+      />
+      <div
+        [hidden]="
+          cFirstname.valid || cFirstname.pristine || cFirstname.disabled
+        "
+        class="errormessage"
+      >
+        Add fist name! (min 1, max 10 character)
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <label for="lName" class="form-label formtext">Customer last name</label>
+      <input
+        [disabled]="checked"
+        [(ngModel)]="customer.lastName"
+        #cLastName="ngModel"
+        name="lName"
+        type="text"
+        class="form-control formtext"
+        id="lName"
+        pattern=".{1,10}"
+        required
+      />
+      <div
+        [hidden]="cLastName.valid || cLastName.pristine || cLastName.disabled"
+        class="errormessage"
+      >
+        Add last name! (min 1, max 10 character)
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="email" class="form-label formtext">E-mail</label>
+      <input
+        [(ngModel)]="customer.email"
+        [disabled]="checked"
+        #cEmail="ngModel"
+        name="email"
+        type="email"
+        class="form-control formtext"
+        id="email"
+        required
+      />
+      <div
+        [hidden]="cEmail.valid || cEmail.pristine || cEmail.disabled"
+        class="errormessage"
+      >
+        Add an e-mail address!
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="addressZip" class="form-label formtext">Address (zip)</label>
+      <input
+        [(ngModel)]="customer.address.zip"
+        [disabled]="checked"
+        #cAddressZip="ngModel"
+        name="addressZip"
+        type="text"
+        class="form-control formtext"
+        id="addressZip"
+        required
+      />
+      <div
+        [hidden]="
+          cAddressZip.valid || cAddressZip.pristine || cAddressZip.disabled
+        "
+        class="errormessage"
+      >
+        Add zip!
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="addressCountry" class="form-label formtext"
+        >Address (country)</label
+      >
+      <input
+        [(ngModel)]="customer.address.country"
+        [disabled]="checked"
+        #cAddressCountry="ngModel"
+        name="addressCountry"
+        type="text"
+        class="form-control formtext"
+        id="addressCountry"
+        required
+      />
+      <div
+        [hidden]="
+          cAddressCountry.valid ||
+          cAddressCountry.pristine ||
+          cAddressCountry.disabled
+        "
+        class="errormessage"
+      >
+        Add country!
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="addressCity" class="form-label formtext"
+        >Address (city)</label
+      >
+      <input
+        [(ngModel)]="customer.address.city"
+        [disabled]="checked"
+        #cAddressCity="ngModel"
+        name="addressCity"
+        type="text"
+        class="form-control formtext"
+        id="addressCity"
+        required
+      />
+      <div
+        [hidden]="
+          cAddressCity.valid || cAddressCity.pristine || cAddressCity.disabled
+        "
+        class="errormessage"
+      >
+        Add city!
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="addressStreet" class="form-label formtext"
+        >Address (street)</label
+      >
+      <input
+        [(ngModel)]="customer.address.street"
+        [disabled]="checked"
+        #cAddressStreet="ngModel"
+        name="addressStreet"
+        type="text"
+        class="form-control formtext"
+        id="addressStreet"
+        required
+      />
+      <div
+        [hidden]="
+          cAddressStreet.valid ||
+          cAddressStreet.pristine ||
+          cAddressStreet.disabled
+        "
+        class="errormessage"
+      >
+        Add street!
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="addressNotes" class="form-label formtext"
+        >Address (notes)</label
+      >
+      <input
+        [(ngModel)]="customer.address.notes"
+        [disabled]="checked"
+        #cAddressNotes="ngModel"
+        name="addressNotes"
+        type="text"
+        class="form-control formtext"
+        id="addressNotes"
+        required
+      />
+      <div
+        [hidden]="
+          cAddressNotes.valid ||
+          cAddressNotes.pristine ||
+          cAddressNotes.disabled
+        "
+        class="errormessage"
+      >
+        Add nodes!
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <label for="active" class="form-label formtext"
+        >Is this customer active?</label
+      >
+      <select
+        [(ngModel)]="customer.active"
+        [disabled]="checked"
+        #heroOwned="ngModel"
+        name="active"
+        id="active"
+        class="form-select formtext"
+        required
+      >
+        <option
+          *ngFor="let status of statusList"
+          [value]="status.key"
+          class="formtext"
+        >
+          {{ status.title }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-check formtext">
+      <input
+        (change)="onChecked()"
+        class="form-check-input"
+        type="checkbox"
+        value="active"
+        id="cSettings"
+        [checked]="checked"
+      />
+      <label class="form-check-label formtext checkboxlabel" for="cSettings">
+        I want to save customer settings!
+      </label>
+    </div>
+    <div class="col-12">
+      <button
+        [disabled]="customerForm.form.invalid || checked === false"
+        type="submit"
+        class="btn btn-primary"
+      >
+        {{ customer.id === 0 ? "Create new customer" : "Save changes" }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -19,6 +19,7 @@ export class BilleditorComponent implements OnInit {
   );
 
   bill: Bill = new Bill();
+  checked: boolean = false;
 
   constructor() {}
 
@@ -26,5 +27,23 @@ export class BilleditorComponent implements OnInit {
     this.bill$.subscribe((bill) => {
       this.bill = bill;
     });
+  }
+
+  onChecked(): void {
+    this.checked = !this.checked;
+  }
+
+  onSubmit(bill: Bill): void {
+    bill.id = Number(bill.id);
+
+    if (this.bill.id) {
+      this.billService
+        .update(bill)
+        .subscribe((bill) => this.router.navigate(['/home']));
+    } else if (!this.bill.id) {
+      this.billService
+        .create(bill)
+        .subscribe((bill) => this.router.navigate(['/home']));
+    }
   }
 }

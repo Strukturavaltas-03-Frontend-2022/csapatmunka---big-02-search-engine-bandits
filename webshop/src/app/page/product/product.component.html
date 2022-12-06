@@ -6,7 +6,7 @@
           <div
             class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
           >
-            <h6 class="text-white text-capitalize ps-3">Authors table</h6>
+            <h6 class="text-white text-capitalize ps-3">Product table</h6>
           </div>
         </div>
         <table class="table align-items-center mb-0">
@@ -37,8 +37,21 @@
                   [ngSwitch]="product[col.key]"
                 >
                   <span *ngSwitchCase="product.id">
-                    <span>{{ product.id }}</span>
+                    <span *ngIf="col.key === 'id'">{{ product.id }}</span>
                   </span>
+
+                  <span *ngSwitchCase="product.active">
+                    <span *ngIf="col.key === 'active'">{{
+                      product.active
+                    }}</span>
+                  </span>
+
+                  <span *ngSwitchCase="product.featured">
+                    <span *ngIf="col.key === 'featured'">{{
+                      product.featured
+                    }}</span>
+                  </span>
+
                   <span *ngSwitchCase="product.name">
                     <span>{{ product.name }}</span>
                     <br />
@@ -46,8 +59,10 @@
                       product.type
                     }}</span>
                   </span>
-                  <span *ngSwitchCase="product.catID"
-                    >{{ category[product.catID - 1].name }}
+                  <span *ngSwitchCase="product.catID">
+                    <span *ngIf="col.key === 'catID'">{{
+                      category[product.catID - 1].name
+                    }}</span>
                   </span>
                   <span *ngSwitchDefault="product[col.key]">{{
                     product[col.key]

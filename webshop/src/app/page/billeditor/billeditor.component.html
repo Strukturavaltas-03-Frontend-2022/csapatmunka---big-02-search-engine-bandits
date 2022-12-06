@@ -1,1 +1,84 @@
-<pre>{{ bill | json }}</pre>
+<div class="mt-4 p-5 text-white rounded mt-3 jumbotron">
+  <h1 class="hotstitle">Bill Editor</h1>
+  <form
+    (ngSubmit)="onSubmit(bill)"
+    #billForm="ngForm"
+    *ngIf="bill$"
+    class="row g-3"
+  >
+    <div class="col-lg-1">
+      <label for="id" class="form-label formtext">Id</label>
+      <input
+        disabled
+        [(ngModel)]="bill.id"
+        #id="ngModel"
+        name="id"
+        type="text"
+        class="form-control formtext"
+        id="id"
+      />
+    </div>
+    <div class="col-lg-6">
+      <label for="order" class="form-label formtext">Order Name</label>
+      <input
+        [disabled]="checked"
+        [(ngModel)]="bill.orderID"
+        #order="ngModel"
+        name="order"
+        type="text"
+        class="form-control formtext"
+        id="order"
+        pattern=".{1,30}"
+        required
+      />
+      <div
+        [hidden]="order.valid || order.pristine || order.disabled"
+        class="errormessage"
+      >
+        Add order name! (min 1, max 30 character)
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <label for="amount" class="form-label formtext">Amount</label>
+      <input
+        [(ngModel)]="bill.amount"
+        [disabled]="checked"
+        #amount="ngModel"
+        name="amount"
+        type="text"
+        class="form-control formtext"
+        id="amount"
+        pattern="[0-5]{1,2}"
+        required
+      />
+      <div
+        [hidden]="amount.valid || amount.pristine || amount.disabled"
+        class="errormessage"
+      >
+        How many card? (max. 5)
+      </div>
+    </div>
+    <div class="form-check formtext">
+      <input
+        (change)="onChecked()"
+        class="form-check-input"
+        type="checkbox"
+        value="status"
+        id="billStatus"
+        [checked]="checked"
+      />
+      <label class="form-check-label formtext checkboxlabel" for="billStatus">
+        I want to save bill!
+      </label>
+    </div>
+    <div class="col-12">
+      <button
+        [disabled]="billForm.form.invalid || checked === false"
+        type="submit"
+        class="btn btn-primary"
+      >
+        {{ bill.id === 0 ? "Create new bill" : "Save changes" }}
+      </button>
+    </div>
+  </form>
+</div>

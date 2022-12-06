@@ -19,6 +19,12 @@ export class CustomereditorComponent implements OnInit {
   );
 
   customer: Customer = new Customer();
+  checked: boolean = false;
+
+  statusList: any[] = [
+    { key: 'true', title: 'YES, the customer is active' },
+    { key: '', title: 'NO, the customer is inactive' },
+  ];
 
   constructor() {}
 
@@ -26,5 +32,24 @@ export class CustomereditorComponent implements OnInit {
     this.customer$.subscribe((customer) => {
       this.customer = customer;
     });
+  }
+
+  onChecked(): void {
+    this.checked = !this.checked;
+  }
+
+  onSubmit(customer: Customer): void {
+    customer.id = Number(customer.id);
+    customer.active = Boolean(customer.active);
+
+    if (this.customer.id) {
+      this.customerService
+        .update(this.customer)
+        .subscribe((customer) => this.router.navigate(['/home']));
+    } else if (!this.customer.id) {
+      this.customerService
+        .create(this.customer)
+        .subscribe((customer) => this.router.navigate(['/home']));
+    }
   }
 }
