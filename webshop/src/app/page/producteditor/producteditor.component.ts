@@ -43,11 +43,11 @@ export class ProducteditorComponent implements OnInit {
     if (this.product.id) {
       this.productService
         .update(this.product)
-        .subscribe((product) => this.router.navigate(['/product']));
+        .subscribe((product) => this.router.navigate(['/products']));
     } else if (!this.product.id) {
       this.productService
         .create(this.product)
-        .subscribe((product) => this.router.navigate(['/product']));
+        .subscribe((product) => this.router.navigate(['/products']));
     }
   }
 }
