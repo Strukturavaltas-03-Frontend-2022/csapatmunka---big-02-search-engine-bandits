@@ -32,11 +32,14 @@
               "
             >
               <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
-                <!-- !status Csaba maitt jelenítjük meg az ID-ket, én tudom, hogy csúnya, de hajthatatlan volt (Viktor) -->
+                <!-- !status Csaba miatt jelenítjük meg az ID-ket, én tudom, hogy csúnya, de hajthatatlan volt (Viktor) -->
                 <p
                   class="text-xs font-weight-bold mb-0"
                   [ngSwitch]="order[col.key]"
                 >
+                <span *ngSwitchCase="order.id">
+                  <span *ngIf="col.key === 'id'">{{ order.id }}</span>
+                </span>
                   <span *ngSwitchCase="order.customerID">{{
                     customerList[order[col.key]].firstName +
                       " " +
@@ -56,6 +59,9 @@
                       "id: " +
                       order[col.key] +
                       ")"
+                  }}</span>
+                  <span *ngSwitchCase="order.amount">{{
+                    order.amount
                   }}</span>
                   <span *ngSwitchCase="order.status"
                     ><span
@@ -78,9 +84,6 @@
                       >New</span
                     >
                   </span>
-                  <span *ngSwitchDefault="order[col.key]">{{
-                    order[col.key]
-                  }}</span>
                 </p>
               </td>
               <td class="align-middle">
