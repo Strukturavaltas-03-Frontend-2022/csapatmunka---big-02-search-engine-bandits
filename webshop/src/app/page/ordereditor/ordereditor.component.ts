@@ -1,8 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
+import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
+import { Product } from 'src/app/model/product';
+import { CustomerService } from 'src/app/service/customer.service';
 import { OrderService } from 'src/app/service/order.service';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
   selector: 'app-ordereditor',
@@ -11,6 +15,8 @@ import { OrderService } from 'src/app/service/order.service';
 })
 export class OrdereditorComponent implements OnInit {
   orderService: OrderService = inject(OrderService);
+  productService: ProductService = inject(ProductService);
+  customerService: CustomerService = inject(CustomerService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -24,6 +30,9 @@ export class OrdereditorComponent implements OnInit {
     { key: 'shipped', title: 'The order is shipped' },
   ];
 
+  customers: Customer[] = [];
+  products: Product[] = [];
+  
   order: Order = new Order();
   checked: boolean = false;
 
@@ -33,6 +42,9 @@ export class OrdereditorComponent implements OnInit {
     this.order$.subscribe((order) => {
       this.order = order;
     });
+
+    this.productService.getAll().subscribe(products => this.products = products);
+    this.customerService.getAll().subscribe(customers => this.customers = customers);
   }
 
   onChecked(): void {

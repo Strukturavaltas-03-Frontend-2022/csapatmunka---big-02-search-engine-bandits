@@ -18,46 +18,44 @@
         />
       </div>
       <div class="col-lg-6">
-        <label for="customerId" class="form-label formtext">Customer Id</label>
-        <input
-          [disabled]="checked"
+        <label for="customerId" class="form-label formtext">Customer</label>
+        <select
           [(ngModel)]="order.customerID"
-          #customerId="ngModel"
-          name="customerId"
-          type="text"
-          class="form-control formtext"
-          id="customerId"
-          pattern=".{1,10}"
+          [disabled]="checked"
+          #status="ngModel"
+          name="customer"
+          id="customer"
+          class="form-select formtext"
           required
-        />
-        <div
-          [hidden]="
-            customerId.valid || customerId.pristine || customerId.disabled
-          "
-          class="errormessage"
         >
-          Add a customer id!
-        </div>
+          <option
+            *ngFor="let customer of customers"
+            [ngValue]="customer.id"
+            class="formtext"
+          >
+            {{ customer.firstName + ' ' + customer.lastName }}
+          </option>
+        </select>
       </div>
       <div class="col-lg-6">
-        <label for="productId" class="form-label formtext">Product Id</label>
-        <input
-          [disabled]="checked"
+        <label for="productId" class="form-label formtext">Product</label>
+        <select
           [(ngModel)]="order.productID"
-          #productId="ngModel"
-          name="productId"
-          type="text"
-          class="form-control formtext"
-          id="productId"
-          pattern=".{1,10}"
+          [disabled]="checked"
+          #status="ngModel"
+          name="product"
+          id="product"
+          class="form-select formtext"
           required
-        />
-        <div
-          [hidden]="productId.valid || productId.pristine || productId.disabled"
-          class="errormessage"
         >
-          Add a product id!
-        </div>
+          <option
+            *ngFor="let product of products"
+            [ngValue]="product.id"
+            class="formtext"
+          >
+            {{ product.name }}
+          </option>
+        </select>
       </div>
   
       <div class="col-lg-2">
