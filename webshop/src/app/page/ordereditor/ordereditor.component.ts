@@ -18,12 +18,38 @@ export class OrdereditorComponent implements OnInit {
     switchMap((params) => this.orderService.get(params['id']))
   );
 
+  statusList: any[] = [
+    { key: 'paid', title: 'The order is paid' },
+    { key: 'new', title: 'The order is not paid yet' },
+    { key: 'shipped', title: 'The order is shipped' },
+  ];
+
   order: Order = new Order();
+  checked: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {
     this.order$.subscribe((order) => {
       this.order = order;
     });
+  }
+
+  onChecked(): void {
+    this.checked = !this.checked;
+  }
+
+  onSubmit(order:Order): void {
+    order.id = Number(order.id);
+
+    if (this.order.id) {
+      this.orderService
+        .update(this.order)
+        .subscribe((order) => this.router.navigate(['/order']));
+    } else if (!this.order.id) {
+      this.orderService
+        .create(this.order)
+        .subscribe((order) => this.router.navigate(['/order']));
+    }
   }
 }
