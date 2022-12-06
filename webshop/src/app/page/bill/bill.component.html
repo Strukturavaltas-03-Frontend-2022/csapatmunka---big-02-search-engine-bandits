@@ -36,9 +36,15 @@
                 *ngFor="let col of columns"
                 class="align-middle text-center text-sm"
               >
+                <p
+                  *ngIf="col.key == 'amount'"
+                  class="text-xs font-weight-bold mb-0"
+                >
+                  {{ bill[col.key] | currency:'USD' }}
+                </p>
                 <!-- !status -->
                 <p
-                  *ngIf="col.key !== 'status'"
+                  *ngIf="col.key !== 'status' && col.key !== 'amount'"
                   class="text-xs font-weight-bold mb-0"
                 >
                   {{ bill[col.key] }}
@@ -87,7 +93,7 @@
               <td></td>
               <td class="align-middle text-center text-sm">
                 Expected Income:
-                <strong>{{ billList | sum : "amount" }}</strong>
+                <strong>{{ billList | sum : "amount" | currency:'USD' }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-danger">New:</span>
