@@ -21,6 +21,7 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { SumPipe } from './pipe/sum.pipe';
 import { CounterPipe } from './pipe/counter.pipe';
 import { IdconverterPipe } from './pipe/idconverter.pipe';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { IdconverterPipe } from './pipe/idconverter.pipe';
     FormsModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

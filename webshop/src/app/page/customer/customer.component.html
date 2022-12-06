@@ -58,22 +58,19 @@
                     >
                   </span>
                   <span *ngSwitchCase="customer.active"
-                    ><span
-                      *ngIf="customer.active === true"
-                      class="badge badge-sm bg-gradient-success"
-                      >Active</span
-                    >
-                  </span>
-                  <span *ngSwitchCase="customer.active"
-                    ><span
-                      *ngIf="customer.active === false"
-                      class="badge badge-sm bg-gradient-danger"
-                      >Inactive</span
-                    >
-                  </span>
-                  <span *ngSwitchDefault="customer[col.key]">{{
-                    customer[col.key]
-                  }}</span>
+                  ><span
+                    *ngIf="customer.active === true && col.key === 'active'"
+                    class="badge badge-sm bg-gradient-success"
+                    >Active</span
+                  >
+                </span>
+                <span *ngSwitchCase="customer.active">
+                  <span
+                    *ngIf="customer.active === false && col.key === 'active'"
+                    class="badge badge-sm bg-gradient-danger"
+                    >Inactive</span
+                  >
+                </span>
                 </p>
               </td>
 
