@@ -41,15 +41,29 @@
                   </span>
 
                   <span *ngSwitchCase="product.active">
-                    <span *ngIf="col.key === 'active'">{{
-                      product.active
-                    }}</span>
+                    <span *ngIf="col.key === 'active'">
+                      <span *ngIf="product.active === false"
+                      class="badge badge-sm bg-gradient-danger">
+                      No
+                    </span>
+                    <span *ngIf="product.active === true"
+                    class="badge badge-sm bg-gradient-success">
+                    Yes
+                  </span>
+                    </span>
                   </span>
 
                   <span *ngSwitchCase="product.featured">
-                    <span *ngIf="col.key === 'featured'">{{
-                      product.featured
-                    }}</span>
+                    <span *ngIf="col.key === 'featured'">
+                        <span *ngIf="product.featured === false"
+                          class="badge badge-sm bg-gradient-danger">
+                          No
+                        </span>
+                        <span *ngIf="product.featured === true"
+                        class="badge badge-sm bg-gradient-success">
+                        Yes
+                      </span>
+                    </span>
                   </span>
 
                   <span *ngSwitchCase="product.name">
