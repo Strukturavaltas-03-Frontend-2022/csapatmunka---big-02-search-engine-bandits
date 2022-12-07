@@ -39,6 +39,9 @@ export class OrderComponent implements OnInit {
   //thead
   columns: ITableColumn[] = this.configService.orderTableColumns;
 
+  sortKey: string = 'id';
+  sortDirection: number = 1;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -66,5 +69,12 @@ export class OrderComponent implements OnInit {
           })
         );
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
   }
 }

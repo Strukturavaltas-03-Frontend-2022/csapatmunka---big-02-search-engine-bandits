@@ -25,6 +25,9 @@ export class BillComponent implements OnInit {
   //thead
   columns: ITableColumn[] = this.configService.billTableColumns;
 
+  sortKey: string = 'id';
+  sortDirection: number = 1;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -47,5 +50,12 @@ export class BillComponent implements OnInit {
           })
         );
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
   }
 }

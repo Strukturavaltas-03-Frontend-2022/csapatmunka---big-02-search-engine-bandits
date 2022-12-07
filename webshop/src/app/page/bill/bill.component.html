@@ -21,9 +21,18 @@ New bill
             <tr>
               <th
                 *ngFor="let col of columns"
+                (click)="setSort(col.key)"
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               >
                 {{ col.title }}
+                <i
+                *ngIf="col.key === sortKey && sortDirection == 1"
+                class="fa fa-long-arrow-up"
+              ></i>
+              <i
+                *ngIf="col.key === sortKey && sortDirection == -1"
+                class="fa fa-long-arrow-down"
+              ></i>
               </th>
               <th></th>
               <th></th>
@@ -35,6 +44,7 @@ New bill
               *ngFor="
                 let bill of billList
                   | filter : (phrase$ | async)
+                  | sort : sortKey : sortDirection
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >

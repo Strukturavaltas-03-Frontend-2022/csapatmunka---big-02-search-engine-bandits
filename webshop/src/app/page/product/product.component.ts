@@ -31,6 +31,9 @@ export class ProductComponent implements OnInit {
   //catId
   category: Category[] = this.configService.categoryID;
 
+  sortKey: string = 'id';
+  sortDirection: number = 1;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -49,5 +52,12 @@ export class ProductComponent implements OnInit {
             this.productList = products;
           }));
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
   }
 }

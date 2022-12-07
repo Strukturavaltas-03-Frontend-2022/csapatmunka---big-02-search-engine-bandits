@@ -27,6 +27,9 @@ export class CustomerComponent implements OnInit {
   //thead
   columns: ITableColumn[] = this.configService.customerTableColumns;
 
+  sortKey: string = 'id';
+  sortDirection: number = 1;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -46,5 +49,12 @@ export class CustomerComponent implements OnInit {
           })
         );
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
   }
 }

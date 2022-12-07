@@ -20,9 +20,18 @@ New customer
             <tr>
               <th
                 *ngFor="let col of columns"
+                (click)="setSort(col.key)"
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
                 {{ col.title }}
+                <i
+                *ngIf="col.key === sortKey && sortDirection == 1"
+                class="fa fa-long-arrow-up"
+              ></i>
+              <i
+                *ngIf="col.key === sortKey && sortDirection == -1"
+                class="fa fa-long-arrow-down"
+              ></i>
               </th>
               <th></th>
               <th></th>
@@ -34,6 +43,7 @@ New customer
               *ngFor="
                 let customer of customerList
                   | filter : (phrase$ | async)
+                  | sort : sortKey : sortDirection
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
@@ -79,43 +89,6 @@ New customer
                 </span>
                 </p>
               </td>
-
-              <!-- <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ customer.id }}</p>
-              </td>
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">
-                      {{ customer.firstName }} {{ customer.lastName }}
-                    </h6>
-                    <p class="text-xs text-secondary mb-0">
-                      {{ customer.email }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ customer.address.country }}
-                </p>
-                <p class="text-xs text-secondary mb-0">
-                  {{ customer.address.zip }}, {{ customer.address.city }},
-                  {{ customer.address.street }} {{ customer.address.notes }}
-                </p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  *ngIf="customer.active"
-                  class="badge badge-sm bg-gradient-success"
-                  >Active</span
-                >
-                <span
-                  *ngIf="!customer.active"
-                  class="badge badge-sm bg-gradient-danger"
-                  >Inactive</span
-                >
-              </td> -->
               <td class="align-middle">
                 <a
                   [routerLink]="['/edit/customer/', customer.id]"
