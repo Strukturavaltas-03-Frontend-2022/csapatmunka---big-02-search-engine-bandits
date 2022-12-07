@@ -6,7 +6,7 @@
     *ngIf="bill$"
     class="row g-3"
   >
-    <div class="col-lg-1">
+    <div class="col-lg-1" *ngIf="bill.id !== 0">
       <label for="id" class="form-label formtext">Id</label>
       <input
         disabled
@@ -19,24 +19,24 @@
       />
     </div>
     <div class="col-lg-6">
-      <label for="order" class="form-label formtext">Order Name</label>
-      <input
-        [disabled]="checked"
-        [(ngModel)]="bill.orderID"
-        #order="ngModel"
-        name="order"
-        type="text"
-        class="form-control formtext"
-        id="order"
-        pattern=".{1,30}"
-        required
-      />
-      <div
-        [hidden]="order.valid || order.pristine || order.disabled"
-        class="errormessage"
+      <label for="order" class="form-label formtext">Order</label>
+      <select
+      [(ngModel)]="bill.orderID"
+      [disabled]="checked"
+      #status="ngModel"
+      name="order"
+      id="order"
+      class="form-select formtext"
+      required
+    >
+      <option
+        *ngFor="let order of orders"
+        [ngValue]="order.id"
+        class="formtext"
       >
-        Add order name! (min 1, max 30 character)
-      </div>
+        {{ order.id}}
+      </option>
+    </select>
     </div>
     <div class="col-lg-2">
       <label for="amount" class="form-label formtext">Amount</label>
@@ -57,6 +57,28 @@
       >
         How many card? (max. 5)
       </div>
+    </div>
+    <div class="col-lg-4">
+      <label for="status" class="form-label formtext"
+        >Bill status</label
+      >
+      <select
+        [(ngModel)]="bill.status"
+        [disabled]="checked"
+        #status="ngModel"
+        name="status"
+        id="status"
+        class="form-select formtext"
+        required
+      >
+        <option
+          *ngFor="let status of statusList"
+          [value]="status.key"
+          class="formtext"
+        >
+          {{ status.title }}
+        </option>
+      </select>
     </div>
     <div class="form-check formtext">
       <input
