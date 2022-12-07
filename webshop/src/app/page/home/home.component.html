@@ -1,14 +1,68 @@
-<div class="row">
-  {{ dashboardData.activeProducts }}
-  {{ dashboardData.activeCustomers }}
-  {{ dashboardData.unPaidOrders }}
-  {{ dashboardData.unPaidBills }}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+          <div class="card-header p-3 pt-2">
+              <div
+                  class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                  <i class="fa fa-car"></i>
+              </div>
+              <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize">Active Products</p>
+                  <h4 class="mb-0">{{ dashboardData.activeProducts }}</h4>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+          <div class="card-header p-3 pt-2">
+              <div
+                  class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                  <i class='fa fa-id-card'></i>
+              </div>
+              <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize">Active Customers</p>
+                  <h4 class="mb-0">{{ dashboardData.activeCustomers }}</h4>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+          <div class="card-header p-3 pt-2">
+              <div
+                  class="icon icon-lg icon-shape bg-gradient-warning shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                  <i class="fa fa-cc-visa"></i>
+              </div>
+              <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize">Unpaid Orders</p>
+                  <h4 class="mb-0">{{ dashboardData.unPaidOrders }}</h4>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+      <div class="card">
+          <div class="card-header p-3 pt-2">
+              <div
+                  class="icon icon-lg icon-shape bg-gradient-danger shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                  <i class="fa fa-money"></i>
+              </div>
+              <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize">Unpaid Bills</p>
+                  <h4 class="mb-0">{{ dashboardData.unPaidBills }}</h4>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 <div class="row">
-  <div id="bills"></div>
-</div>
-
-<div class="row">
-  <div id="orders"></div>
+  <div class="col-6">
+    <div id="bills"></div>
+  </div>
+  <div class="col-6">
+    <div id="orders"></div>
+  </div>
 </div>
