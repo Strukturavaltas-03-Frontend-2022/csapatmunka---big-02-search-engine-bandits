@@ -167,6 +167,26 @@ New product
                 </a>
               </td>
             </tr>
+            <tr>
+              <td class="align-middle text-center text-sm">
+                All products:<strong> {{ productList.length }}</strong>
+              </td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+              Green cars:
+                <strong> {{ productList | counter : "catID" : 3 }}</strong>
+              </td>
+              <td></td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+                Featured:
+                <strong>{{ productList | sum : "featured"}}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                Active:
+                <strong> {{ productList | sum : "active"}}</strong>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
