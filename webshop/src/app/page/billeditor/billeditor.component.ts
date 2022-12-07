@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, switchMap } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
 import { Order } from 'src/app/model/order';
@@ -14,6 +15,7 @@ import { OrderService } from 'src/app/service/order.service';
 export class BilleditorComponent implements OnInit {
   billService: BillService = inject(BillService);
   orderService: OrderService = inject(OrderService);
+  toastr:ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -55,11 +57,17 @@ export class BilleditorComponent implements OnInit {
     if (this.bill.id) {
       this.billService
         .update(bill)
-        .subscribe((bill) => this.router.navigate(['/home']));
+        .subscribe((bill) => {
+          this.toastr.success('Bill updated successfully', 'Bill updated!', { timeOut: 3000 });
+           this.router.navigate(['/bill']);
+        });
     } else if (!this.bill.id) {
       this.billService
         .create(bill)
-        .subscribe((bill) => this.router.navigate(['/home']));
+        .subscribe((bill) => {
+          this.toastr.success('Bill created successfully', 'Bill created!', { timeOut: 3000 });
+          this.router.navigate(['/bill']);
+        });
     }
   }
 }

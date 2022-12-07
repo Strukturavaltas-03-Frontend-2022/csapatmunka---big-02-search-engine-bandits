@@ -53,7 +53,7 @@
       />
       <div
         [hidden]="amount.valid || amount.pristine || amount.disabled"
-        class="errormessage"
+        class="alert alert-danger"
       >
         How many card? (max. 5)
       </div>
@@ -88,6 +88,7 @@
         value="status"
         id="billStatus"
         [checked]="checked"
+        [disabled]="!billForm.form.valid"
       />
       <label class="form-check-label formtext checkboxlabel" for="billStatus">
         I want to save bill!

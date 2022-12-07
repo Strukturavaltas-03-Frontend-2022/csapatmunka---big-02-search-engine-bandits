@@ -1,4 +1,10 @@
 {{ phrase$ | async }}
+<a
+[routerLink]="['/edit/bill/']"
+href="javascript:;"
+class="btn bg-gradient-dark text-sm col-12">
+New bill
+</a>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -71,17 +77,17 @@
                 <a
                   [routerLink]="['/edit/bill/', bill.id]"
                   href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                >
+                  class="btn btn-warning text-xs mb-0">
+                  <i class="fa fa-pencil"></i>
                   Edit
                 </a>
               </td>
               <td class="align-middle">
                 <a
                   (click)="removeBill(bill)"
-                  class="text-secondary font-weight-bold text-xs"
-                  href="javascript:;"
-                >
+                  class="btn btn-danger text-xs mb-0"
+                  href="javascript:;">
+                  <i class="fa fa-trash"></i>
                   Delete
                 </a>
               </td>
@@ -111,12 +117,6 @@
   </div>
 </div>
 
-<a
-[routerLink]="['/edit/bill/']"
-href="javascript:;"
-class="text-secondary font-weight-bold text-xs"
->
-New bill
-</a>
+
 
 <pagination-controls (pageChange)="page = $event"></pagination-controls>

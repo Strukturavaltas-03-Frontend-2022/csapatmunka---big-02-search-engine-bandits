@@ -32,7 +32,7 @@
         />
         <div
           [hidden]="productName.valid || productName.pristine || productName.disabled"
-          class="errormessage"
+          class="alert alert-danger"
         >
           Name of product
         </div>
@@ -51,7 +51,7 @@
         />
         <div
           [hidden]="productDescription.valid || productDescription.pristine || productDescription.disabled"
-          class="errormessage"
+          class="alert alert-danger"
         >
           Description of product
         </div>
@@ -70,7 +70,7 @@
         />
         <div
           [hidden]="productPrice.valid || productPrice.pristine || productPrice.disabled"
-          class="errormessage"
+          class="alert alert-danger"
         >
           Price of product
         </div>
@@ -89,7 +89,7 @@
         />
         <div
           [hidden]="productType.valid || productType.pristine || productType.disabled"
-          class="errormessage"
+          class="alert alert-danger"
         >
           Type of product
         </div>
@@ -124,14 +124,7 @@
           type="checkbox"
           class="form-check-input"
           id="featured"
-          required
         />
-        <div
-          [hidden]="featured.valid || featured.pristine || featured.disabled"
-          class="errormessage"
-        >
-          Is the product featured?
-        </div>
       </div>
       <div class="form-check formtext">
         <label for="active" class="form-label formtext">Active</label>
@@ -143,14 +136,7 @@
           type="checkbox"
           class="form-check-input"
           id="active"
-          required
         />
-        <div
-          [hidden]="active.valid || active.pristine || active.disabled"
-          class="errormessage"
-        >
-          Is the product active?
-        </div>
       </div>
   
       <div class="form-check formtext">
@@ -161,6 +147,7 @@
           value="active"
           id="cSettings"
           [checked]="checked"
+          [disabled]="!productForm.form.valid"
         />
         <label class="form-check-label formtext checkboxlabel" for="cSettings">
           I want to save product settings!

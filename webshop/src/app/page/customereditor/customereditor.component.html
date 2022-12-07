@@ -35,7 +35,7 @@
         [hidden]="
           cFirstname.valid || cFirstname.pristine || cFirstname.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add fist name! (min 1, max 10 character)
       </div>
@@ -55,7 +55,7 @@
       />
       <div
         [hidden]="cLastName.valid || cLastName.pristine || cLastName.disabled"
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add last name! (min 1, max 10 character)
       </div>
@@ -75,7 +75,7 @@
       />
       <div
         [hidden]="cEmail.valid || cEmail.pristine || cEmail.disabled"
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add an e-mail address!
       </div>
@@ -97,7 +97,7 @@
         [hidden]="
           cAddressZip.valid || cAddressZip.pristine || cAddressZip.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add zip!
       </div>
@@ -123,7 +123,7 @@
           cAddressCountry.pristine ||
           cAddressCountry.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add country!
       </div>
@@ -147,7 +147,7 @@
         [hidden]="
           cAddressCity.valid || cAddressCity.pristine || cAddressCity.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add city!
       </div>
@@ -173,7 +173,7 @@
           cAddressStreet.pristine ||
           cAddressStreet.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add street!
       </div>
@@ -199,7 +199,7 @@
           cAddressNotes.pristine ||
           cAddressNotes.disabled
         "
-        class="errormessage"
+        class="alert alert-danger"
       >
         Add nodes!
       </div>
@@ -236,6 +236,7 @@
         value="active"
         id="cSettings"
         [checked]="checked"
+        [disabled]="!customerForm.form.valid"
       />
       <label class="form-check-label formtext checkboxlabel" for="cSettings">
         I want to save customer settings!

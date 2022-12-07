@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, switchMap } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
@@ -17,6 +18,7 @@ export class OrdereditorComponent implements OnInit {
   orderService: OrderService = inject(OrderService);
   productService: ProductService = inject(ProductService);
   customerService: CustomerService = inject(CustomerService);
+  toastr:ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -62,11 +64,17 @@ export class OrdereditorComponent implements OnInit {
     if (this.order.id) {
       this.orderService
         .update(this.order)
-        .subscribe((order) => this.router.navigate(['/order']));
+        .subscribe((order) => {
+          this.toastr.success('Order updated successfully', 'Order updated!', { timeOut: 3000 });
+          this.router.navigate(['/order']);
+        });
     } else if (!this.order.id) {
       this.orderService
         .create(this.order)
-        .subscribe((order) => this.router.navigate(['/order']));
+        .subscribe((order) => {
+          this.toastr.success('Order created successfully', 'Order created!', { timeOut: 3000 });
+           this.router.navigate(['/order']);
+        });
     }
   }
 }

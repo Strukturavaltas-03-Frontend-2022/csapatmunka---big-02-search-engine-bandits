@@ -1,3 +1,9 @@
+<a
+[routerLink]="['/edit/order/']"
+href="javascript:;"
+class="btn bg-gradient-dark text-sm col-12">
+New order
+</a>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -90,17 +96,17 @@
                 <a
                   [routerLink]="['/edit/order/', order.id]"
                   href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                >
+                  class="btn btn-warning text-xs mb-0">
+                  <i class="fa fa-pencil"></i>
                   Edit
                 </a>
               </td>
               <td class="align-middle">
                 <a
                   (click)="removeBill(order)"
-                  class="text-secondary font-weight-bold text-xs"
-                  href="javascript:;"
-                >
+                  class="btn btn-danger text-xs mb-0"
+                  href="javascript:;">
+                  <i class="fa fa-trash"></i>
                   Delete
                 </a>
               </td>
@@ -137,12 +143,6 @@
   </div>
 </div>
 
-<a
-[routerLink]="['/edit/order/']"
-href="javascript:;"
-class="text-secondary font-weight-bold text-xs"
->
-New order
-</a>
+
 
 <pagination-controls (pageChange)="page = $event"></pagination-controls>

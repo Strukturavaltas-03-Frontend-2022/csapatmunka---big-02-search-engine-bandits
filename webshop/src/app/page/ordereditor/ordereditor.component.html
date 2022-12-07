@@ -73,7 +73,7 @@
         />
         <div
           [hidden]="amount.valid || amount.pristine || amount.disabled"
-          class="errormessage"
+          class="alert alert-danger"
         >
           Add amount of product!
         </div>
@@ -110,6 +110,7 @@
           value="active"
           id="cSettings"
           [checked]="checked"
+          [disabled]="!orderForm.form.valid"
         />
         <label class="form-check-label formtext checkboxlabel" for="cSettings">
           I want to save order settings!
