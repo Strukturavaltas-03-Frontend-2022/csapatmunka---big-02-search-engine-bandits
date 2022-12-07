@@ -1,5 +1,11 @@
-<div class="mt-4 p-5 text-white rounded mt-3 jumbotron">
-    <h1 class="hotstitle">Product Editor</h1>
+<div class="p-5 text-white rounded mt-2">
+    <h1 class="hotstitle text-center">Product Editor</h1>
+    <div class="hr-theme-slash-2">
+      <div class="hr-line"></div>
+      <div class="hr-icon"><i class="fa fa-circle"></i></div>
+      <div class="hr-line"></div>
+    </div>
+    <div class="col-6 mx-auto form-group">
     <form
       (ngSubmit)="onSubmit(product)"
       #productForm="ngForm"
@@ -18,7 +24,7 @@
           disabled="true"
         />
       </div>  
-      <div class="col-lg-2">
+      <div class="col-lg-11">
         <label for="productName" class="form-label formtext">Name</label>
         <input
           [(ngModel)]="product.name"
@@ -32,12 +38,12 @@
         />
         <div
           [hidden]="productName.valid || productName.pristine || productName.disabled"
-          class="alert alert-danger"
+          class="font-weight-bold text-danger"
         >
-          Name of product
+          Add name of product!
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-12">
         <label for="productDescription" class="form-label formtext">Description</label>
         <input
           [(ngModel)]="product.description"
@@ -51,12 +57,12 @@
         />
         <div
           [hidden]="productDescription.valid || productDescription.pristine || productDescription.disabled"
-          class="alert alert-danger"
+          class="font-weight-bold text-danger"
         >
-          Description of product
+          Add description of product!
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-3">
         <label for="productPrice" class="form-label formtext">Price</label>
         <input
           [(ngModel)]="product.price"
@@ -70,12 +76,12 @@
         />
         <div
           [hidden]="productPrice.valid || productPrice.pristine || productPrice.disabled"
-          class="alert alert-danger"
+          class="font-weight-bold text-danger"
         >
-          Price of product
+          Add price of product!
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-3">
         <label for="productType" class="form-label formtext">Type</label>
         <input
           [(ngModel)]="product.type"
@@ -89,9 +95,9 @@
         />
         <div
           [hidden]="productType.valid || productType.pristine || productType.disabled"
-          class="alert alert-danger"
+          class="font-weight-bold text-danger"
         >
-          Type of product
+          Add type of product!
         </div>
       </div>
       <div class="col-lg-6">
@@ -114,8 +120,8 @@
           </option>
         </select>
       </div>
-      <div class="form-check formtext">
-        <label for="featured" class="form-label formtext">Featured</label>
+      <div class="form-check formtext text-center">
+        <label for="featured" class="form-label formtext mx-3">Featured:</label>
         <input
           [(ngModel)]="product.featured"
           [disabled]="checked"
@@ -126,8 +132,8 @@
           id="featured"
         />
       </div>
-      <div class="form-check formtext">
-        <label for="active" class="form-label formtext">Active</label>
+      <div class="form-check formtext text-center">
+        <label for="active" class="form-label formtext mx-3">Active:</label>
         <input
           [(ngModel)]="product.active"
           [disabled]="checked"
@@ -139,7 +145,7 @@
         />
       </div>
   
-      <div class="form-check formtext">
+      <div class="form-check formtext text-center">
         <input
           (change)="onChecked()"
           class="form-check-input"
@@ -153,7 +159,7 @@
           I want to save product settings!
         </label>
       </div>
-      <div class="col-12">
+      <div class="col-12 text-center">
         <button
           [disabled]="productForm.form.invalid || checked === false"
           type="submit"
@@ -163,5 +169,6 @@
         </button>
       </div>
     </form>
+  </div>
   </div>
   
