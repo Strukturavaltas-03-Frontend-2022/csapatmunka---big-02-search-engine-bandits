@@ -123,28 +123,29 @@ New order
             </tr>
             <tr>
               <td class="align-middle text-center text-sm">
-                All order:<strong> {{ orderList.length }}</strong>
+                All orders:<strong> {{ orderList.length }}</strong>
               </td>
-              <td></td>
-              <td></td>
+              <td class="align-middle text-center text-sm">
+                All customers:<strong> {{ orderList.length}}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                All products:<strong> {{ orderList.length }}</strong>
+              </td>
               <td class="align-middle text-center text-sm">
                 All ordered car:
                 <strong>{{ orderList | sum : "amount" }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-danger">New:</span>
-                <strong> {{ orderList | counter : "status" : "new" }}</strong>
-              </td>
-              <td class="align-middle text-center text-sm">
+                <strong class="me-1"> {{ orderList | counter : "status" : "new" }}</strong>
                 <span class="badge badge-sm bg-gradient-warning">Shipped:</span>
-                <strong>
-                  {{ orderList | counter : "status" : "shipped" }}</strong
-                >
-              </td>
-              <td class="align-middle text-center text-sm">
+                <strong class="me-1">
+                  {{ orderList | counter : "status" : "shipped" }}</strong>
                 <span class="badge badge-sm bg-gradient-success">Paid:</span>
-                <strong> {{ orderList | counter : "status" : "paid" }}</strong>
+                <strong class="me-1"> {{ orderList | counter : "status" : "paid" }}</strong>
               </td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>

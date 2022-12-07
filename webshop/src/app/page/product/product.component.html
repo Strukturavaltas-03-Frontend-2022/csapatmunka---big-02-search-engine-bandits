@@ -131,7 +131,10 @@ New product
                 <strong> {{ productList | counter : "catID" : 3 }}</strong>
               </td>
               <td></td>
-              <td></td>
+              <td class="align-middle text-center text-sm">
+                Total liquid assets:
+                <strong>{{ productList | sum : "price" | currency:'USD' }}</strong>
+              </td>
               <td class="align-middle text-center text-sm">
                 Featured:
                 <strong>{{ productList | sum : "featured"}}</strong>
