@@ -29,8 +29,13 @@ export class CustomereditorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.customer$.subscribe((customer) => {
-      this.customer = customer;
+    this.ar.params.subscribe((params) => {
+      if(!params['id']){
+        return;
+      }
+      this.customer$.subscribe((customer) => {
+        this.customer = customer;
+      });
     });
   }
 

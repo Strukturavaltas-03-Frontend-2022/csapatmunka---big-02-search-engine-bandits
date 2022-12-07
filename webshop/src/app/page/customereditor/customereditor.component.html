@@ -6,7 +6,7 @@
     *ngIf="customer$"
     class="row g-3"
   >
-    <div class="col-lg-1">
+    <div class="col-lg-1" *ngIf="customer.id !== 0">
       <label for="id" class="form-label formtext">Id</label>
       <input
         [(ngModel)]="customer.id"
@@ -15,6 +15,7 @@
         type="text"
         class="form-control formtext"
         id="id"
+        disabled="true"
       />
     </div>
     <div class="col-lg-6">
