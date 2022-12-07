@@ -33,6 +33,6 @@ export class BaseService<T extends { [x: string]: any }> {
   }
 
   remove(item: T): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}${this.entityName}${item['id']}`);
+    return this.http.delete<T>(`${this.apiUrl}${this.entityName}/${item['id']}`);
   }
 }

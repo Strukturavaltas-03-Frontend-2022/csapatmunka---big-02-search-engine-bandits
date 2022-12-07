@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
 import { BillService } from 'src/app/service/bill.service';
@@ -12,6 +13,7 @@ import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 export class BillComponent implements OnInit {
   billService: BillService = inject(BillService);
   configService: ConfigService = inject(ConfigService);
+  toastr:ToastrService = inject(ToastrService);
 
   //paginator
   page: number = 1;
@@ -39,7 +41,10 @@ export class BillComponent implements OnInit {
       this.billService
         .remove(bill)
         .subscribe(() =>
-          this.billService.getAll().subscribe(() => location.reload())
+          this.billService.getAll().subscribe(bills => {
+            this.toastr.error('Bill deleted successfully!', 'Bill deleted!', { timeOut: 3000 });
+            this.billList = bills;
+          })
         );
     }
   }

@@ -21,6 +21,10 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { SumPipe } from './pipe/sum.pipe';
 import { CounterPipe } from './pipe/counter.pipe';
 import { IdconverterPipe } from './pipe/idconverter.pipe';
+import { CommonModule } from '@angular/common';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,10 @@ import { IdconverterPipe } from './pipe/idconverter.pipe';
     FormsModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
+    NgApexchartsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,3 +1,9 @@
+<a
+[routerLink]="['/edit/product/']"
+href="javascript:;"
+class="btn bg-gradient-dark text-sm col-12">
+New product
+</a>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -41,15 +47,29 @@
                   </span>
 
                   <span *ngSwitchCase="product.active">
-                    <span *ngIf="col.key === 'active'">{{
-                      product.active
-                    }}</span>
+                    <span *ngIf="col.key === 'active'">
+                      <span *ngIf="product.active === false"
+                      class="badge badge-sm bg-gradient-danger">
+                      No
+                    </span>
+                    <span *ngIf="product.active === true"
+                    class="badge badge-sm bg-gradient-success">
+                    Yes
+                  </span>
+                    </span>
                   </span>
 
                   <span *ngSwitchCase="product.featured">
-                    <span *ngIf="col.key === 'featured'">{{
-                      product.featured
-                    }}</span>
+                    <span *ngIf="col.key === 'featured'">
+                        <span *ngIf="product.featured === false"
+                          class="badge badge-sm bg-gradient-danger">
+                          No
+                        </span>
+                        <span *ngIf="product.featured === true"
+                        class="badge badge-sm bg-gradient-success">
+                        Yes
+                      </span>
+                    </span>
                   </span>
 
                   <span *ngSwitchCase="product.name">
@@ -64,8 +84,11 @@
                       category[product.catID - 1].name
                     }}</span>
                   </span>
-                  <span *ngSwitchDefault="product[col.key]">{{
-                    product[col.key]
+                  <span *ngSwitchCase="product.price">{{
+                    product.price
+                  }}</span>
+                  <span *ngSwitchCase="product.description">{{
+                    product.description
                   }}</span>
                 </p>
               </td>
@@ -129,17 +152,17 @@
                 <a
                   [routerLink]="['/edit/product/', product.id]"
                   href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                >
+                  class="btn btn-warning text-xs mb-0">
+                  <i class="fa fa-pencil"></i>
                   Edit
                 </a>
               </td>
               <td class="align-middle">
                 <a
                   (click)="removeBill(product)"
-                  class="text-secondary font-weight-bold text-xs"
-                  href="javascript:;"
-                >
+                  class="btn btn-danger text-xs mb-0"
+                  href="javascript:;">
+                  <i class="fa fa-trash"></i>
                   Delete
                 </a>
               </td>
@@ -150,4 +173,7 @@
     </div>
   </div>
 </div>
+
+
+
 <pagination-controls (pageChange)="page = $event"></pagination-controls>

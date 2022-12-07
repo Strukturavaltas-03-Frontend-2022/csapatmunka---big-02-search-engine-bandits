@@ -1,8 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, switchMap } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
+import { Order } from 'src/app/model/order';
 import { BillService } from 'src/app/service/bill.service';
+import { OrderService } from 'src/app/service/order.service';
 
 @Component({
   selector: 'app-billeditor',
@@ -11,6 +14,8 @@ import { BillService } from 'src/app/service/bill.service';
 })
 export class BilleditorComponent implements OnInit {
   billService: BillService = inject(BillService);
+  orderService: OrderService = inject(OrderService);
+  toastr:ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -19,14 +24,27 @@ export class BilleditorComponent implements OnInit {
   );
 
   bill: Bill = new Bill();
+  orders: Order[] = [];
   checked: boolean = false;
 
   constructor() {}
 
+  statusList: any[] = [
+    { key: 'paid', title: 'This bill is paid' },
+    { key: 'new', title: 'This bill is not paid yet' },
+  ];
+
   ngOnInit(): void {
-    this.bill$.subscribe((bill) => {
-      this.bill = bill;
+    this.ar.params.subscribe((params) => {
+      if(!params['id']){
+        return;
+      }
+      this.bill$.subscribe((bill) => {
+        this.bill = bill;
+      });
     });
+
+    this.orderService.getAll().subscribe(orders => this.orders = orders);
   }
 
   onChecked(): void {
@@ -39,11 +57,17 @@ export class BilleditorComponent implements OnInit {
     if (this.bill.id) {
       this.billService
         .update(bill)
-        .subscribe((bill) => this.router.navigate(['/home']));
+        .subscribe((bill) => {
+          this.toastr.success('Bill updated successfully', 'Bill updated!', { timeOut: 3000 });
+           this.router.navigate(['/bill']);
+        });
     } else if (!this.bill.id) {
       this.billService
         .create(bill)
-        .subscribe((bill) => this.router.navigate(['/home']));
+        .subscribe((bill) => {
+          this.toastr.success('Bill created successfully', 'Bill created!', { timeOut: 3000 });
+          this.router.navigate(['/bill']);
+        });
     }
   }
 }

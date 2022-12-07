@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
@@ -18,6 +19,7 @@ export class OrderComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
   productService: ProductService = inject(ProductService);
   configService: ConfigService = inject(ConfigService);
+  toastr:ToastrService = inject(ToastrService);
 
   orderList$: Observable<Order[]> = this.orderService.getAll();
 
@@ -58,7 +60,10 @@ export class OrderComponent implements OnInit {
       this.orderService
         .remove(order)
         .subscribe(() =>
-          this.orderService.getAll().subscribe(() => location.reload())
+          this.orderService.getAll().subscribe(orders =>{
+            this.toastr.error('Order deleted successfully!', 'Order deleted!', { timeOut: 3000 });
+            this.orderList = orders;
+          })
         );
     }
   }

@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, switchMap } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { CustomerService } from 'src/app/service/customer.service';
@@ -11,6 +12,7 @@ import { CustomerService } from 'src/app/service/customer.service';
 })
 export class CustomereditorComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
+  toastr:ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -29,8 +31,13 @@ export class CustomereditorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.customer$.subscribe((customer) => {
-      this.customer = customer;
+    this.ar.params.subscribe((params) => {
+      if(!params['id']){
+        return;
+      }
+      this.customer$.subscribe((customer) => {
+        this.customer = customer;
+      });
     });
   }
 
@@ -45,11 +52,17 @@ export class CustomereditorComponent implements OnInit {
     if (this.customer.id) {
       this.customerService
         .update(this.customer)
-        .subscribe((customer) => this.router.navigate(['/home']));
+        .subscribe((customer) => {
+          this.toastr.success('Customer updated successfully', 'Customer updated!', { timeOut: 3000 });
+           this.router.navigate(['/customer']);
+        });
     } else if (!this.customer.id) {
       this.customerService
         .create(this.customer)
-        .subscribe((customer) => this.router.navigate(['/home']));
+        .subscribe((customer) => {
+          this.toastr.success('Customer created successfully', 'Customer created!', { timeOut: 3000 });
+          this.router.navigate(['/customer']);
+        });
     }
   }
 }
