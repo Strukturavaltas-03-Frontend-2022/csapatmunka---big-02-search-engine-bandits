@@ -63,8 +63,8 @@ New customer
                       {{ customer.address.street }}</span
                     >
                   </span>
-                  <span *ngSwitchCase="customer.active"
-                  ><span
+                  <span *ngSwitchCase="customer.active">
+                  <span
                     *ngIf="customer.active === true && col.key === 'active'"
                     class="badge badge-sm bg-gradient-success"
                     >Active</span
