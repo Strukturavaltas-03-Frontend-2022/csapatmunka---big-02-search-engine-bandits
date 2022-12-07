@@ -39,8 +39,13 @@ export class OrdereditorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.order$.subscribe((order) => {
-      this.order = order;
+    this.ar.params.subscribe((params) => {
+      if(!params['id']){
+        return;
+      }
+      this.order$.subscribe((order) => {
+        this.order = order;
+      });
     });
 
     this.productService.getAll().subscribe(products => this.products = products);
