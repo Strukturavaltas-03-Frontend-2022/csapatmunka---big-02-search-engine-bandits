@@ -85,7 +85,7 @@ New product
                     }}</span>
                   </span>
                   <span *ngSwitchCase="product.price">{{
-                    product.price
+                    product.price | currency: 'USD'
                   }}</span>
                   <span *ngSwitchCase="product.description">{{
                     product.description
