@@ -64,6 +64,12 @@
                       category[product.catID - 1].name
                     }}</span>
                   </span>
+                  <span *ngSwitchCase="product.price">{{
+                    product.price
+                  }}</span>
+                  <span *ngSwitchCase="product.description">{{
+                    product.description
+                  }}</span>
                 </p>
               </td>
               <!-- <td
@@ -147,4 +153,13 @@
     </div>
   </div>
 </div>
+
+<a
+[routerLink]="['/edit/product/']"
+href="javascript:;"
+class="text-secondary font-weight-bold text-xs"
+>
+New product
+</a>
+
 <pagination-controls (pageChange)="page = $event"></pagination-controls>

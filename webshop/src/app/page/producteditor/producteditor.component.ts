@@ -28,8 +28,14 @@ export class ProducteditorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.product$.subscribe((product) => {
-      this.product = product;
+    this.ar.params.subscribe((params) => {
+      if(!params['id']){
+        return;
+      }
+
+      this.product$.subscribe((product) => {
+        this.product = product;
+      });
     });
   }
 
