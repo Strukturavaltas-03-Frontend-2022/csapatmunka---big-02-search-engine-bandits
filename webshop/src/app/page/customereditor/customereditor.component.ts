@@ -12,7 +12,7 @@ import { CustomerService } from 'src/app/service/customer.service';
 })
 export class CustomereditorComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -21,7 +21,6 @@ export class CustomereditorComponent implements OnInit {
   );
 
   customer: Customer = new Customer();
-  checked: boolean = false;
 
   statusList: any[] = [
     { key: 'true', title: 'YES, the customer is active' },
@@ -32,7 +31,7 @@ export class CustomereditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.ar.params.subscribe((params) => {
-      if(!params['id']){
+      if (!params['id']) {
         return;
       }
       this.customer$.subscribe((customer) => {
@@ -41,28 +40,28 @@ export class CustomereditorComponent implements OnInit {
     });
   }
 
-  onChecked(): void {
-    this.checked = !this.checked;
-  }
-
   onSubmit(customer: Customer): void {
     customer.id = Number(customer.id);
     customer.active = Boolean(customer.active);
 
     if (this.customer.id) {
-      this.customerService
-        .update(this.customer)
-        .subscribe((customer) => {
-          this.toastr.success('Customer updated successfully', 'Customer updated!', { timeOut: 3000 });
-           this.router.navigate(['/customer']);
-        });
+      this.customerService.update(this.customer).subscribe((customer) => {
+        this.toastr.success(
+          'Customer updated successfully',
+          'Customer updated!',
+          { timeOut: 3000 }
+        );
+        this.router.navigate(['/customer']);
+      });
     } else if (!this.customer.id) {
-      this.customerService
-        .create(this.customer)
-        .subscribe((customer) => {
-          this.toastr.success('Customer created successfully', 'Customer created!', { timeOut: 3000 });
-          this.router.navigate(['/customer']);
-        });
+      this.customerService.create(this.customer).subscribe((customer) => {
+        this.toastr.success(
+          'Customer created successfully',
+          'Customer created!',
+          { timeOut: 3000 }
+        );
+        this.router.navigate(['/customer']);
+      });
     }
   }
 }

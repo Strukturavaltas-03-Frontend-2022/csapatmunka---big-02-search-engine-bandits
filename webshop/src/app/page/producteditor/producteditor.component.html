@@ -1,174 +1,171 @@
 <div class="p-5 text-white rounded mt-2">
-    <h1 class="hotstitle text-center">Product Editor</h1>
-    <div class="hr-theme-slash-2">
-      <div class="hr-line"></div>
-      <div class="hr-icon"><i class="fa fa-circle"></i></div>
-      <div class="hr-line"></div>
-    </div>
+  <h1 class="hotstitle text-center">Product Editor</h1>
+  <div class="hr-theme-slash-2">
+    <div class="hr-line"></div>
+    <div class="hr-icon"><i class="fa fa-circle"></i></div>
+    <div class="hr-line"></div>
+  </div>
+
+  <div class="mt-4 p-5 rounded jumbotron">
     <div class="col-6 mx-auto form-group">
-    <form
-      (ngSubmit)="onSubmit(product)"
-      #productForm="ngForm"
-      *ngIf="product$"
-      class="row g-3"
-    >
-      <div *ngIf="product.id !== 0" class="col-lg-1">
-        <label for="id" class="form-label formtext">Id</label>
-        <input
-          [(ngModel)]="product.id"
-          #id="ngModel"
-          name="id"
-          type="text"
-          class="form-control formtext"
-          id="id"
-          disabled="true"
-        />
-      </div>  
-      <div class="col-lg-11">
-        <label for="productName" class="form-label formtext">Name</label>
-        <input
-          [(ngModel)]="product.name"
-          [disabled]="checked"
-          #productName="ngModel"
-          name="productName"
-          type="text"
-          class="form-control formtext"
-          id="productName"
-          required
-        />
-        <div
-          [hidden]="productName.valid || productName.pristine || productName.disabled"
-          class="font-weight-bold text-danger"
-        >
-          Add name of product!
+      <form
+        (ngSubmit)="onSubmit(product)"
+        #productForm="ngForm"
+        *ngIf="product$"
+        class="row g-3"
+      >
+        <div *ngIf="product.id !== 0" class="col-lg-1">
+          <label for="id" class="form-label formtext">Id</label>
+          <input
+            [(ngModel)]="product.id"
+            #id="ngModel"
+            name="id"
+            type="text"
+            class="form-control formtext"
+            id="id"
+            disabled="true"
+          />
         </div>
-      </div>
-      <div class="col-lg-12">
-        <label for="productDescription" class="form-label formtext">Description</label>
-        <input
-          [(ngModel)]="product.description"
-          [disabled]="checked"
-          #productDescription="ngModel"
-          name="productDescription"
-          type="text"
-          class="form-control formtext"
-          id="productDescription"
-          required
-        />
-        <div
-          [hidden]="productDescription.valid || productDescription.pristine || productDescription.disabled"
-          class="font-weight-bold text-danger"
-        >
-          Add description of product!
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <label for="productPrice" class="form-label formtext">Price</label>
-        <input
-          [(ngModel)]="product.price"
-          [disabled]="checked"
-          #productPrice="ngModel"
-          name="productPrice"
-          type="number"
-          class="form-control formtext"
-          id="productPrice"
-          required
-        />
-        <div
-          [hidden]="productPrice.valid || productPrice.pristine || productPrice.disabled"
-          class="font-weight-bold text-danger"
-        >
-          Add price of product!
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <label for="productType" class="form-label formtext">Type</label>
-        <input
-          [(ngModel)]="product.type"
-          [disabled]="checked"
-          #productType="ngModel"
-          name="productType"
-          type="text"
-          class="form-control formtext"
-          id="productType"
-          required
-        />
-        <div
-          [hidden]="productType.valid || productType.pristine || productType.disabled"
-          class="font-weight-bold text-danger"
-        >
-          Add type of product!
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <label for="category" class="form-label formtext">Category</label>
-        <select
-          [(ngModel)]="product.catID"
-          [disabled]="checked"
-          #category="ngModel"
-          name="category"
-          id="category"
-          class="form-select formtext"
-          required
-        >
-          <option
-            *ngFor="let category of categories"
-            [ngValue]="category.id"
-            class="formtext"
+        <div class="col-lg-11">
+          <label for="productName" class="form-label formtext">Name</label>
+          <input
+            [(ngModel)]="product.name"
+            #productName="ngModel"
+            name="productName"
+            type="text"
+            class="form-control formtext"
+            id="productName"
+            required
+          />
+          <div
+            [hidden]="
+              productName.valid || productName.pristine || productName.disabled
+            "
+            class="font-weight-bold text-danger"
           >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-      <div class="form-check formtext text-center">
-        <label for="featured" class="form-label formtext mx-3">Featured:</label>
-        <input
-          [(ngModel)]="product.featured"
-          [disabled]="checked"
-          #featured="ngModel"
-          name="featured"
-          type="checkbox"
-          class="form-check-input"
-          id="featured"
-        />
-      </div>
-      <div class="form-check formtext text-center">
-        <label for="active" class="form-label formtext mx-3">Active:</label>
-        <input
-          [(ngModel)]="product.active"
-          [disabled]="checked"
-          #active="ngModel"
-          name="active"
-          type="checkbox"
-          class="form-check-input"
-          id="active"
-        />
-      </div>
-  
-      <div class="form-check formtext text-center">
-        <input
-          (change)="onChecked()"
-          class="form-check-input"
-          type="checkbox"
-          value="active"
-          id="cSettings"
-          [checked]="checked"
-          [disabled]="!productForm.form.valid"
-        />
-        <label class="form-check-label formtext checkboxlabel" for="cSettings">
-          I want to save product settings!
-        </label>
-      </div>
-      <div class="col-12 text-center">
-        <button
-          [disabled]="productForm.form.invalid || checked === false"
-          type="submit"
-          class="btn btn-primary"
-        >
-          {{ product.id === 0 ? "Create new product" : "Save changes" }}
-        </button>
-      </div>
-    </form>
+            Add name of product!
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <label for="productDescription" class="form-label formtext"
+            >Description</label
+          >
+          <input
+            [(ngModel)]="product.description"
+            #productDescription="ngModel"
+            name="productDescription"
+            type="text"
+            class="form-control formtext"
+            id="productDescription"
+            required
+          />
+          <div
+            [hidden]="
+              productDescription.valid ||
+              productDescription.pristine ||
+              productDescription.disabled
+            "
+            class="font-weight-bold text-danger"
+          >
+            Add description of product!
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label for="productPrice" class="form-label formtext">Price</label>
+          <input
+            [(ngModel)]="product.price"
+            #productPrice="ngModel"
+            name="productPrice"
+            type="number"
+            class="form-control formtext"
+            id="productPrice"
+            required
+          />
+          <div
+            [hidden]="
+              productPrice.valid ||
+              productPrice.pristine ||
+              productPrice.disabled
+            "
+            class="font-weight-bold text-danger"
+          >
+            Add price of product!
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label for="productType" class="form-label formtext">Type</label>
+          <input
+            [(ngModel)]="product.type"
+            #productType="ngModel"
+            name="productType"
+            type="text"
+            class="form-control formtext"
+            id="productType"
+            required
+          />
+          <div
+            [hidden]="
+              productType.valid || productType.pristine || productType.disabled
+            "
+            class="font-weight-bold text-danger"
+          >
+            Add type of product!
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label for="category" class="form-label formtext">Category</label>
+          <select
+            [(ngModel)]="product.catID"
+            #category="ngModel"
+            name="category"
+            id="category"
+            class="form-select formtext"
+            required
+          >
+            <option
+              *ngFor="let category of categories"
+              [ngValue]="category.id"
+              class="formtext"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-check formtext text-center">
+          <label for="featured" class="form-label formtext mx-3"
+            >Featured:</label
+          >
+          <input
+            [(ngModel)]="product.featured"
+            #featured="ngModel"
+            name="featured"
+            type="checkbox"
+            class="form-check-input"
+            id="featured"
+          />
+        </div>
+        <div class="form-check formtext text-center">
+          <label for="active" class="form-label formtext mx-3">Active:</label>
+          <input
+            [(ngModel)]="product.active"
+            #active="ngModel"
+            name="active"
+            type="checkbox"
+            class="form-check-input"
+            id="active"
+          />
+        </div>
+
+        <div class="col-12 text-center">
+          <button
+            [disabled]="productForm.form.invalid"
+            type="submit"
+            class="btn bg-gradient-dark"
+          >
+            {{ product.id === 0 ? "Create new product" : "Save changes" }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  </div>
-  
+</div>

@@ -1,137 +1,137 @@
 <div class="p-5 text-white rounded mt-2">
-    <h1 class="hotstitle text-center">Order Editor</h1>
-    <div class="hr-theme-slash-2">
-      <div class="hr-line"></div>
-      <div class="hr-icon"><i class="fa fa-circle"></i></div>
-      <div class="hr-line"></div>
-    </div>
+  <h1 class="hotstitle text-center">Order Editor</h1>
+  <div class="hr-theme-slash-2">
+    <div class="hr-line"></div>
+    <div class="hr-icon"><i class="fa fa-circle"></i></div>
+    <div class="hr-line"></div>
+  </div>
+
+  <div class="mt-4 p-5 rounded jumbotron">
     <div class="col-6 mx-auto form-group">
-    <form
-      (ngSubmit)="onSubmit(order)"
-      #orderForm="ngForm"
-      *ngIf="order$"
-      class="row g-3"
-    >
-      <div class="col-lg-1" *ngIf="order.id !== 0">
-        <label for="id" class="form-label formtext">Id</label>
-        <input
-          [(ngModel)]="order.id"
-          #id="ngModel"
-          name="id"
-          type="text"
-          class="form-control formtext"
-          id="id"
-          disabled="true"
-        />
-      </div>
-      <div class="col-lg-11">
-        <label for="customerId" class="form-label formtext">Customer</label>
-        <select
-          [(ngModel)]="order.customerID"
-          [disabled]="checked"
-          #status="ngModel"
-          name="customer"
-          id="customer"
-          class="form-select formtext"
-          required
-        >
-          <option
-            *ngFor="let customer of customers"
-            [ngValue]="customer.id"
-            class="formtext"
+      <form
+        (ngSubmit)="onSubmit(order)"
+        #orderForm="ngForm"
+        *ngIf="order$"
+        class="row g-3"
+      >
+        <div class="col-lg-1" *ngIf="order.id !== 0">
+          <label for="id" class="form-label text-dark font-weight-bold formtext"
+            >Id</label
           >
-            {{ customer.firstName + ' ' + customer.lastName }}
-          </option>
-        </select>
-      </div>
-      <div class="col-lg-12">
-        <label for="productId" class="form-label formtext">Product</label>
-        <select
-          [(ngModel)]="order.productID"
-          [disabled]="checked"
-          #status="ngModel"
-          name="product"
-          id="product"
-          class="form-select formtext"
-          required
-        >
-          <option
-            *ngFor="let product of products"
-            [ngValue]="product.id"
-            class="formtext"
-          >
-            {{ product.name }}
-          </option>
-        </select>
-      </div>
-  
-      <div class="col-lg-6">
-        <label for="amount" class="form-label formtext">Amount</label>
-        <input
-          [(ngModel)]="order.amount"
-          [disabled]="checked"
-          #amount="ngModel"
-          name="amount"
-          type="number"
-          class="form-control formtext"
-          id="amount"
-          required
-        />
-        <div
-          [hidden]="amount.valid || amount.pristine || amount.disabled"
-          class="font-weight-bold text-danger"
-        >
-          Add amount of product!
+          <input
+            [(ngModel)]="order.id"
+            #id="ngModel"
+            name="id"
+            type="text"
+            class="form-control formtext"
+            id="id"
+            disabled="true"
+          />
         </div>
-      </div>
-  
-      <div class="col-lg-6">
-        <label for="status" class="form-label formtext"
-          >Is this order paid?</label
-        >
-        <select
-          [(ngModel)]="order.status"
-          [disabled]="checked"
-          #status="ngModel"
-          name="status"
-          id="status"
-          class="form-select formtext"
-          required
-        >
-          <option
-            *ngFor="let status of statusList"
-            [value]="status.key"
-            class="formtext"
+        <div class="col-lg-11">
+          <label
+            for="customerId"
+            class="form-label text-dark font-weight-bold formtext"
+            >Customer</label
           >
-            {{ status.title }}
-          </option>
-        </select>
-      </div>
-  
-      <div class="form-check formtext text-center">
-        <input
-          (change)="onChecked()"
-          class="form-check-input"
-          type="checkbox"
-          value="active"
-          id="cSettings"
-          [checked]="checked"
-          [disabled]="!orderForm.form.valid"
-        />
-        <label class="form-check-label formtext checkboxlabel" for="cSettings">
-          I want to save order settings!
-        </label>
-      </div>
-      <div class="col-12 text-center">
-        <button
-          [disabled]="orderForm.form.invalid || checked === false"
-          type="submit"
-          class="btn btn-primary"
-        >
-          {{ order.id === 0 ? "Create new customer" : "Save changes" }}
-        </button>
-      </div>
-    </form>
+          <select
+            [(ngModel)]="order.customerID"
+            #status="ngModel"
+            name="customer"
+            id="customer"
+            class="form-select formtext"
+            required
+          >
+            <option
+              *ngFor="let customer of customers"
+              [ngValue]="customer.id"
+              class="formtext"
+            >
+              {{ customer.firstName + " " + customer.lastName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-12">
+          <label
+            for="productId"
+            class="form-label text-dark font-weight-bold formtext"
+            >Product</label
+          >
+          <select
+            [(ngModel)]="order.productID"
+            #status="ngModel"
+            name="product"
+            id="product"
+            class="form-select formtext"
+            required
+          >
+            <option
+              *ngFor="let product of products"
+              [ngValue]="product.id"
+              class="formtext"
+            >
+              {{ product.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-lg-6">
+          <label
+            for="amount"
+            class="form-label text-dark font-weight-bold formtext"
+            >Amount</label
+          >
+          <input
+            [(ngModel)]="order.amount"
+            #amount="ngModel"
+            name="amount"
+            type="number"
+            class="form-control formtext"
+            id="amount"
+            required
+          />
+          <div
+            [hidden]="amount.valid || amount.pristine || amount.disabled"
+            class="font-weight-bold text-danger"
+          >
+            Add amount of product!
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <label
+            for="status"
+            class="form-label text-dark font-weight-bold formtext"
+            >Is this order paid?</label
+          >
+          <select
+            [(ngModel)]="order.status"
+            #status="ngModel"
+            name="status"
+            id="status"
+            class="form-select formtext"
+            required
+          >
+            <option
+              *ngFor="let status of statusList"
+              [value]="status.key"
+              class="formtext"
+            >
+              {{ status.title }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-12 text-center">
+          <button
+            [disabled]="orderForm.form.invalid"
+            type="submit"
+            class="btn bg-gradient-dark"
+          >
+            {{ order.id === 0 ? "Create new customer" : "Save changes" }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-  

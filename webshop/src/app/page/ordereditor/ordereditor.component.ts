@@ -18,7 +18,7 @@ export class OrdereditorComponent implements OnInit {
   orderService: OrderService = inject(OrderService);
   productService: ProductService = inject(ProductService);
   customerService: CustomerService = inject(CustomerService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -34,15 +34,14 @@ export class OrdereditorComponent implements OnInit {
 
   customers: Customer[] = [];
   products: Product[] = [];
-  
+
   order: Order = new Order();
-  checked: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
     this.ar.params.subscribe((params) => {
-      if(!params['id']){
+      if (!params['id']) {
         return;
       }
       this.order$.subscribe((order) => {
@@ -50,31 +49,31 @@ export class OrdereditorComponent implements OnInit {
       });
     });
 
-    this.productService.getAll().subscribe(products => this.products = products);
-    this.customerService.getAll().subscribe(customers => this.customers = customers);
+    this.productService
+      .getAll()
+      .subscribe((products) => (this.products = products));
+    this.customerService
+      .getAll()
+      .subscribe((customers) => (this.customers = customers));
   }
 
-  onChecked(): void {
-    this.checked = !this.checked;
-  }
-
-  onSubmit(order:Order): void {
+  onSubmit(order: Order): void {
     order.id = Number(order.id);
 
     if (this.order.id) {
-      this.orderService
-        .update(this.order)
-        .subscribe((order) => {
-          this.toastr.success('Order updated successfully', 'Order updated!', { timeOut: 3000 });
-          this.router.navigate(['/order']);
+      this.orderService.update(this.order).subscribe((order) => {
+        this.toastr.success('Order updated successfully', 'Order updated!', {
+          timeOut: 3000,
         });
+        this.router.navigate(['/order']);
+      });
     } else if (!this.order.id) {
-      this.orderService
-        .create(this.order)
-        .subscribe((order) => {
-          this.toastr.success('Order created successfully', 'Order created!', { timeOut: 3000 });
-           this.router.navigate(['/order']);
+      this.orderService.create(this.order).subscribe((order) => {
+        this.toastr.success('Order created successfully', 'Order created!', {
+          timeOut: 3000,
         });
+        this.router.navigate(['/order']);
+      });
     }
   }
 }

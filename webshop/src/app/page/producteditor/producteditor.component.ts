@@ -15,7 +15,7 @@ import { ProductService } from 'src/app/service/product.service';
 export class ProducteditorComponent implements OnInit {
   productService: ProductService = inject(ProductService);
   configService: ConfigService = inject(ConfigService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -24,14 +24,13 @@ export class ProducteditorComponent implements OnInit {
   );
 
   product: Product = new Product();
-  checked: boolean = false;
-  categories:Category[] = this.configService.categoryID;
+  categories: Category[] = this.configService.categoryID;
 
   constructor() {}
 
   ngOnInit(): void {
     this.ar.params.subscribe((params) => {
-      if(!params['id']){
+      if (!params['id']) {
         return;
       }
 
@@ -41,27 +40,27 @@ export class ProducteditorComponent implements OnInit {
     });
   }
 
-  onChecked(): void {
-    this.checked = !this.checked;
-  }
-
-  onSubmit(product:Product): void {
+  onSubmit(product: Product): void {
     product.id = Number(product.id);
 
     if (this.product.id) {
-      this.productService
-        .update(this.product)
-        .subscribe((product) => {
-          this.toastr.success('Product updated successfully', 'Product updated!', { timeOut: 3000 });
-          this.router.navigate(['/products']);
-        });
+      this.productService.update(this.product).subscribe((product) => {
+        this.toastr.success(
+          'Product updated successfully',
+          'Product updated!',
+          { timeOut: 3000 }
+        );
+        this.router.navigate(['/products']);
+      });
     } else if (!this.product.id) {
-      this.productService
-        .create(this.product)
-        .subscribe((product) => {
-          this.toastr.success('Product created successfully', 'Product created!', { timeOut: 3000 });
-          this.router.navigate(['/products']);
-        });
+      this.productService.create(this.product).subscribe((product) => {
+        this.toastr.success(
+          'Product created successfully',
+          'Product created!',
+          { timeOut: 3000 }
+        );
+        this.router.navigate(['/products']);
+      });
     }
   }
 }

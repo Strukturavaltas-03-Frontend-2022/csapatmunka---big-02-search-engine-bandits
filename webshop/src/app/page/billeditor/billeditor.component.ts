@@ -15,7 +15,7 @@ import { OrderService } from 'src/app/service/order.service';
 export class BilleditorComponent implements OnInit {
   billService: BillService = inject(BillService);
   orderService: OrderService = inject(OrderService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
   ar: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -25,7 +25,6 @@ export class BilleditorComponent implements OnInit {
 
   bill: Bill = new Bill();
   orders: Order[] = [];
-  checked: boolean = false;
 
   constructor() {}
 
@@ -36,7 +35,7 @@ export class BilleditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.ar.params.subscribe((params) => {
-      if(!params['id']){
+      if (!params['id']) {
         return;
       }
       this.bill$.subscribe((bill) => {
@@ -44,30 +43,26 @@ export class BilleditorComponent implements OnInit {
       });
     });
 
-    this.orderService.getAll().subscribe(orders => this.orders = orders);
-  }
-
-  onChecked(): void {
-    this.checked = !this.checked;
+    this.orderService.getAll().subscribe((orders) => (this.orders = orders));
   }
 
   onSubmit(bill: Bill): void {
     bill.id = Number(bill.id);
 
     if (this.bill.id) {
-      this.billService
-        .update(bill)
-        .subscribe((bill) => {
-          this.toastr.success('Bill updated successfully', 'Bill updated!', { timeOut: 3000 });
-           this.router.navigate(['/bill']);
+      this.billService.update(bill).subscribe((bill) => {
+        this.toastr.success('Bill updated successfully', 'Bill updated!', {
+          timeOut: 3000,
         });
+        this.router.navigate(['/bill']);
+      });
     } else if (!this.bill.id) {
-      this.billService
-        .create(bill)
-        .subscribe((bill) => {
-          this.toastr.success('Bill created successfully', 'Bill created!', { timeOut: 3000 });
-          this.router.navigate(['/bill']);
+      this.billService.create(bill).subscribe((bill) => {
+        this.toastr.success('Bill created successfully', 'Bill created!', {
+          timeOut: 3000,
         });
+        this.router.navigate(['/bill']);
+      });
     }
   }
 }
