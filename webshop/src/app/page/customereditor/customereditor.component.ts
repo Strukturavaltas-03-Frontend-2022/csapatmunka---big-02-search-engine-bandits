@@ -27,6 +27,9 @@ export class CustomereditorComponent implements OnInit {
     { key: '', title: 'NO, the customer is inactive' },
   ];
 
+  //loading button
+  loading = true;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -63,5 +66,9 @@ export class CustomereditorComponent implements OnInit {
         this.router.navigate(['/customer']);
       });
     }
+  }
+
+  onLoading(): void {
+    this.loading = false;
   }
 }

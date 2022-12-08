@@ -125,10 +125,18 @@
         <div class="col-12 text-center">
           <button
             [disabled]="orderForm.form.invalid"
+            (click)="onLoading()"
             type="submit"
             class="btn bg-gradient-dark"
           >
             {{ order.id === 0 ? "Create new customer" : "Save changes" }}
+            <div
+              [hidden]="loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
           </button>
         </div>
       </form>

@@ -1,8 +1,12 @@
-h2{
-    color: rgb(227, 51, 112);
+h2 {
+  color: rgb(227, 51, 112);
 }
 
+th:hover {
+  cursor: pointer;
+}
 
-th:hover{
-    cursor: pointer;
-  }
+.pagination ::ng-deep .ngx-pagination .current {
+  background: #e33370;
+  border-radius: 15%;
+}

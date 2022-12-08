@@ -13,7 +13,7 @@ import { CustomerService } from 'src/app/service/customer.service';
 export class CustomerComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
   configService: ConfigService = inject(ConfigService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
 
   customerList$: Observable<Customer[]> = this.customerService.getAll();
 
@@ -22,8 +22,8 @@ export class CustomerComponent implements OnInit {
   customerList: Customer[] = [];
 
   //searcher
-  searchPhrase:string = "";
-  searchBy:string = 'name';
+  searchPhrase: string = '';
+  searchBy: string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.customerTableColumns;
@@ -41,25 +41,27 @@ export class CustomerComponent implements OnInit {
 
   removeBill(customer: Customer): void {
     if (confirm('Are you sure?')) {
-      this.customerService
-        .remove(customer)
-        .subscribe(() =>
-          this.customerService.getAll().subscribe(customers => {
-            this.toastr.error('Customer deleted successfully!', 'Customer deleted!', { timeOut: 3000 });
-            this.customerList = customers;
-          })
-        );
+      this.customerService.remove(customer).subscribe(() =>
+        this.customerService.getAll().subscribe((customers) => {
+          this.toastr.error(
+            'Customer deleted successfully!',
+            'Customer deleted!',
+            { timeOut: 3000 }
+          );
+          this.customerList = customers;
+        })
+      );
     }
   }
 
-  setSort(key:string): void {
-    if(key === this.sortKey) {
+  setSort(key: string): void {
+    if (key === this.sortKey) {
       this.sortDirection *= -1;
     }
     this.sortKey = key;
   }
 
-  onSearch(event:any) : void {
+  onSearch(event: any): void {
     this.searchPhrase = event.target.value;
   }
 }
