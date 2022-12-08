@@ -15,7 +15,9 @@
         class="row g-3"
       >
         <div *ngIf="product.id !== 0" class="col-lg-1">
-          <label for="id" class="form-label formtext">Id</label>
+          <label for="id" class="form-label text-dark font-weight-bold formtext"
+            >Id</label
+          >
           <input
             [(ngModel)]="product.id"
             #id="ngModel"
@@ -27,7 +29,11 @@
           />
         </div>
         <div class="col-lg-11">
-          <label for="productName" class="form-label formtext">Name</label>
+          <label
+            for="productName"
+            class="form-label text-dark font-weight-bold formtext"
+            >Name</label
+          >
           <input
             [(ngModel)]="product.name"
             #productName="ngModel"
@@ -47,7 +53,9 @@
           </div>
         </div>
         <div class="col-lg-12">
-          <label for="productDescription" class="form-label formtext"
+          <label
+            for="productDescription"
+            class="form-label text-dark font-weight-bold formtext"
             >Description</label
           >
           <input
@@ -71,7 +79,11 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <label for="productPrice" class="form-label formtext">Price</label>
+          <label
+            for="productPrice"
+            class="form-label text-dark font-weight-bold formtext"
+            >Price</label
+          >
           <input
             [(ngModel)]="product.price"
             #productPrice="ngModel"
@@ -93,7 +105,11 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <label for="productType" class="form-label formtext">Type</label>
+          <label
+            for="productType"
+            class="form-label text-dark font-weight-bold formtext"
+            >Type</label
+          >
           <input
             [(ngModel)]="product.type"
             #productType="ngModel"
@@ -113,7 +129,11 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <label for="category" class="form-label formtext">Category</label>
+          <label
+            for="category"
+            class="form-label text-dark font-weight-bold formtext"
+            >Category</label
+          >
           <select
             [(ngModel)]="product.catID"
             #category="ngModel"
@@ -132,7 +152,9 @@
           </select>
         </div>
         <div class="form-check formtext text-center">
-          <label for="featured" class="form-label formtext mx-3"
+          <label
+            for="featured"
+            class="form-label text-dark font-weight-bold formtext mx-3"
             >Featured:</label
           >
           <input
@@ -145,7 +167,11 @@
           />
         </div>
         <div class="form-check formtext text-center">
-          <label for="active" class="form-label formtext mx-3">Active:</label>
+          <label
+            for="active"
+            class="form-label text-dark font-weight-bold formtext mx-3"
+            >Active:</label
+          >
           <input
             [(ngModel)]="product.active"
             #active="ngModel"
@@ -158,11 +184,19 @@
 
         <div class="col-12 text-center">
           <button
+            (click)="onLoading()"
             [disabled]="productForm.form.invalid"
             type="submit"
             class="btn bg-gradient-dark"
           >
             {{ product.id === 0 ? "Create new product" : "Save changes" }}
+            <div
+              [hidden]="loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
           </button>
         </div>
       </form>

@@ -26,6 +26,9 @@ export class ProducteditorComponent implements OnInit {
   product: Product = new Product();
   categories: Category[] = this.configService.categoryID;
 
+  //loading button
+  loading = true;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -62,5 +65,9 @@ export class ProducteditorComponent implements OnInit {
         this.router.navigate(['/products']);
       });
     }
+  }
+
+  onLoading(): void {
+    this.loading = false;
   }
 }

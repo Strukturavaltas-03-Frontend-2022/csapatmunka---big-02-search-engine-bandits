@@ -13,15 +13,15 @@ import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 export class BillComponent implements OnInit {
   billService: BillService = inject(BillService);
   configService: ConfigService = inject(ConfigService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
 
   //paginator
   page: number = 1;
   billList: Bill[] = [];
 
   //searcher
-  searchPhrase:string = "";
-  searchBy:string = 'name';
+  searchPhrase: string = '';
+  searchBy: string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.billTableColumns;
@@ -42,25 +42,25 @@ export class BillComponent implements OnInit {
   //delete method
   removeBill(bill: Bill): void {
     if (confirm('Are you sure?')) {
-      this.billService
-        .remove(bill)
-        .subscribe(() =>
-          this.billService.getAll().subscribe(bills => {
-            this.toastr.error('Bill deleted successfully!', 'Bill deleted!', { timeOut: 3000 });
-            this.billList = bills;
-          })
-        );
+      this.billService.remove(bill).subscribe(() =>
+        this.billService.getAll().subscribe((bills) => {
+          this.toastr.error('Bill deleted successfully!', 'Bill deleted!', {
+            timeOut: 3000,
+          });
+          this.billList = bills;
+        })
+      );
     }
   }
 
-  setSort(key:string): void {
-    if(key === this.sortKey) {
+  setSort(key: string): void {
+    if (key === this.sortKey) {
       this.sortDirection *= -1;
     }
     this.sortKey = key;
   }
 
-  onSearch(event:any) : void {
+  onSearch(event: any): void {
     this.searchPhrase = event.target.value;
   }
 }

@@ -3,22 +3,36 @@
   <div class="col-6 mx-auto form-group">
     <form class="row g-3">
       <div class="col-lg-6">
-        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
-          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        <select
+          name="searchBy"
+          class="form-select col-4"
+          aria-label="select"
+          [(ngModel)]="searchBy"
+        >
+          <option *ngFor="let col of columns" [value]="col.key" selected>
+            {{ col.title }}
+          </option>
         </select>
       </div>
       <div class="col-lg-6">
-        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+        <input
+          (input)="onSearch($event)"
+          class="form-control col-lg-4"
+          type="text"
+          placeholder="Search..."
+          aria-label="search input"
+        />
       </div>
     </form>
   </div>
 </div>
 
 <a
-[routerLink]="['/edit/bill/']"
-href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12 mt-3">
-New bill
+  [routerLink]="['/edit/bill/']"
+  href="javascript:;"
+  class="btn bg-gradient-dark text-sm col-12 mt-3"
+>
+  New bill
 </a>
 <div class="container-fluid py-1">
   <div class="row">
@@ -38,17 +52,17 @@ New bill
               <th
                 *ngFor="let col of columns"
                 (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center user-select-none"
               >
                 {{ col.title }}
                 <i
-                *ngIf="col.key === sortKey && sortDirection == 1"
-                class="fa fa-long-arrow-up"
-              ></i>
-              <i
-                *ngIf="col.key === sortKey && sortDirection == -1"
-                class="fa fa-long-arrow-down"
-              ></i>
+                  *ngIf="col.key === sortKey && sortDirection == 1"
+                  class="fa fa-long-arrow-up"
+                ></i>
+                <i
+                  *ngIf="col.key === sortKey && sortDirection == -1"
+                  class="fa fa-long-arrow-down"
+                ></i>
               </th>
               <th></th>
               <th></th>
@@ -72,7 +86,7 @@ New bill
                   *ngIf="col.key == 'amount'"
                   class="text-xs font-weight-bold mb-0"
                 >
-                  {{ bill[col.key] | currency:'USD' }}
+                  {{ bill[col.key] | currency : "USD" }}
                 </p>
                 <!-- !status -->
                 <p
@@ -103,7 +117,8 @@ New bill
                 <a
                   [routerLink]="['/edit/bill/', bill.id]"
                   href="javascript:;"
-                  class="btn btn-warning text-xs mb-0">
+                  class="btn btn-warning text-xs mb-0"
+                >
                   <i class="fa fa-pencil"></i>
                   Edit
                 </a>
@@ -112,7 +127,8 @@ New bill
                 <a
                   (click)="removeBill(bill)"
                   class="btn btn-danger text-xs mb-0"
-                  href="javascript:;">
+                  href="javascript:;"
+                >
                   <i class="fa fa-trash"></i>
                   Delete
                 </a>
@@ -125,13 +141,19 @@ New bill
               <td></td>
               <td class="align-middle text-center text-sm">
                 Expected Income:
-                <strong>{{ billList | sum : "amount" | currency:'USD' }}</strong>
+                <strong>{{
+                  billList | sum : "amount" | currency : "USD"
+                }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-danger">New:</span>
-                <strong class="me-1"> {{ billList | counter : "status" : "new" }}</strong>
+                <strong class="me-1">
+                  {{ billList | counter : "status" : "new" }}</strong
+                >
                 <span class="badge badge-sm bg-gradient-success">Paid:</span>
-                <strong class="me-1"> {{ billList | counter : "status" : "paid" }}</strong>
+                <strong class="me-1">
+                  {{ billList | counter : "status" : "paid" }}</strong
+                >
               </td>
             </tr>
           </tbody>
@@ -141,6 +163,16 @@ New bill
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-center col-12">
-  <pagination-controls (pageChange)="page = $event" class="pagination"></pagination-controls>
+<!-- loading screen -->
+<div *ngIf="billList.length === 0" class="text-center">
+  <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<!-- /loading screen -->
+<div *ngIf="billList.length > 0" class="d-flex justify-content-center col-12">
+  <pagination-controls
+    (pageChange)="page = $event"
+    class="pagination"
+  ></pagination-controls>
 </div>

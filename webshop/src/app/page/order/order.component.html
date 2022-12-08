@@ -3,22 +3,36 @@
   <div class="col-6 mx-auto form-group">
     <form class="row g-3">
       <div class="col-lg-6">
-        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
-          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        <select
+          name="searchBy"
+          class="form-select col-4"
+          aria-label="select"
+          [(ngModel)]="searchBy"
+        >
+          <option *ngFor="let col of columns" [value]="col.key" selected>
+            {{ col.title }}
+          </option>
         </select>
       </div>
       <div class="col-lg-6">
-        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+        <input
+          (input)="onSearch($event)"
+          class="form-control col-lg-4"
+          type="text"
+          placeholder="Search..."
+          aria-label="search input"
+        />
       </div>
     </form>
   </div>
 </div>
 
 <a
-[routerLink]="['/edit/order/']"
-href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12 mt-3">
-New order
+  [routerLink]="['/edit/order/']"
+  href="javascript:;"
+  class="btn bg-gradient-dark text-sm col-12 mt-3"
+>
+  New order
 </a>
 <div class="container-fluid py-1">
   <div class="row">
@@ -38,17 +52,17 @@ New order
               <th
                 *ngFor="let col of columns"
                 (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
               >
                 {{ col.title }}
                 <i
-                *ngIf="col.key === sortKey && sortDirection == 1"
-                class="fa fa-long-arrow-up"
-              ></i>
-              <i
-                *ngIf="col.key === sortKey && sortDirection == -1"
-                class="fa fa-long-arrow-down"
-              ></i>
+                  *ngIf="col.key === sortKey && sortDirection == 1"
+                  class="fa fa-long-arrow-up"
+                ></i>
+                <i
+                  *ngIf="col.key === sortKey && sortDirection == -1"
+                  class="fa fa-long-arrow-down"
+                ></i>
               </th>
               <th></th>
               <th></th>
@@ -70,9 +84,9 @@ New order
                   class="text-xs font-weight-bold mb-0"
                   [ngSwitch]="order[col.key]"
                 >
-                <span *ngSwitchCase="order.id">
-                  <span *ngIf="col.key === 'id'">{{ order.id }}</span>
-                </span>
+                  <span *ngSwitchCase="order.id">
+                    <span *ngIf="col.key === 'id'">{{ order.id }}</span>
+                  </span>
                   <span *ngSwitchCase="order.customerID">{{
                     customerList[order[col.key]].firstName +
                       " " +
@@ -93,9 +107,7 @@ New order
                       order[col.key] +
                       ")"
                   }}</span>
-                  <span *ngSwitchCase="order.amount">{{
-                    order.amount
-                  }}</span>
+                  <span *ngSwitchCase="order.amount">{{ order.amount }}</span>
                   <span *ngSwitchCase="order.status"
                     ><span
                       *ngIf="order.status === 'paid'"
@@ -123,7 +135,8 @@ New order
                 <a
                   [routerLink]="['/edit/order/', order.id]"
                   href="javascript:;"
-                  class="btn btn-warning text-xs mb-0">
+                  class="btn btn-warning text-xs mb-0"
+                >
                   <i class="fa fa-pencil"></i>
                   Edit
                 </a>
@@ -132,7 +145,8 @@ New order
                 <a
                   (click)="removeBill(order)"
                   class="btn btn-danger text-xs mb-0"
-                  href="javascript:;">
+                  href="javascript:;"
+                >
                   <i class="fa fa-trash"></i>
                   Delete
                 </a>
@@ -143,7 +157,7 @@ New order
                 All orders:<strong> {{ orderList.length }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
-                All customers:<strong> {{ orderList.length}}</strong>
+                All customers:<strong> {{ orderList.length }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
                 All products:<strong> {{ orderList.length }}</strong>
@@ -154,12 +168,17 @@ New order
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-danger">New:</span>
-                <strong class="me-1"> {{ orderList | counter : "status" : "new" }}</strong>
+                <strong class="me-1">
+                  {{ orderList | counter : "status" : "new" }}</strong
+                >
                 <span class="badge badge-sm bg-gradient-warning">Shipped:</span>
                 <strong class="me-1">
-                  {{ orderList | counter : "status" : "shipped" }}</strong>
+                  {{ orderList | counter : "status" : "shipped" }}</strong
+                >
                 <span class="badge badge-sm bg-gradient-success">Paid:</span>
-                <strong class="me-1"> {{ orderList | counter : "status" : "paid" }}</strong>
+                <strong class="me-1">
+                  {{ orderList | counter : "status" : "paid" }}</strong
+                >
               </td>
               <td></td>
               <td></td>
@@ -171,6 +190,16 @@ New order
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-center col-12">
-  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+<!-- loading screen -->
+<div *ngIf="orderList.length === 0" class="text-center">
+  <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<!-- /loading screen -->
+<div *ngIf="orderList.length > 0" class="d-flex justify-content-center col-12">
+  <pagination-controls
+    class="pagination"
+    (pageChange)="page = $event"
+  ></pagination-controls>
 </div>

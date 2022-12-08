@@ -3,22 +3,36 @@
   <div class="col-6 mx-auto form-group">
     <form class="row g-3">
       <div class="col-lg-6">
-        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
-          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        <select
+          name="searchBy"
+          class="form-select col-4"
+          aria-label="select"
+          [(ngModel)]="searchBy"
+        >
+          <option *ngFor="let col of columns" [value]="col.key" selected>
+            {{ col.title }}
+          </option>
         </select>
       </div>
       <div class="col-lg-6">
-        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+        <input
+          (input)="onSearch($event)"
+          class="form-control col-lg-4"
+          type="text"
+          placeholder="Search..."
+          aria-label="search input"
+        />
       </div>
     </form>
   </div>
 </div>
 
 <a
-[routerLink]="['/edit/customer/']"
-href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12 mt-3">
-New customer
+  [routerLink]="['/edit/customer/']"
+  href="javascript:;"
+  class="btn bg-gradient-dark text-sm col-12 mt-3"
+>
+  New customer
 </a>
 <div class="container-fluid py-1">
   <div class="row">
@@ -38,17 +52,17 @@ New customer
               <th
                 *ngFor="let col of columns"
                 (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
               >
                 {{ col.title }}
                 <i
-                *ngIf="col.key === sortKey && sortDirection == 1"
-                class="fa fa-long-arrow-up"
-              ></i>
-              <i
-                *ngIf="col.key === sortKey && sortDirection == -1"
-                class="fa fa-long-arrow-down"
-              ></i>
+                  *ngIf="col.key === sortKey && sortDirection == 1"
+                  class="fa fa-long-arrow-up"
+                ></i>
+                <i
+                  *ngIf="col.key === sortKey && sortDirection == -1"
+                  class="fa fa-long-arrow-down"
+                ></i>
               </th>
               <th></th>
               <th></th>
@@ -91,26 +105,27 @@ New customer
                     >
                   </span>
                   <span *ngSwitchCase="customer.active">
-                  <span
-                    *ngIf="customer.active === true && col.key === 'active'"
-                    class="badge badge-sm bg-gradient-success"
-                    >Active</span
-                  >
-                </span>
-                <span *ngSwitchCase="customer.active">
-                  <span
-                    *ngIf="customer.active === false && col.key === 'active'"
-                    class="badge badge-sm bg-gradient-danger"
-                    >Inactive</span
-                  >
-                </span>
+                    <span
+                      *ngIf="customer.active === true && col.key === 'active'"
+                      class="badge badge-sm bg-gradient-success"
+                      >Active</span
+                    >
+                  </span>
+                  <span *ngSwitchCase="customer.active">
+                    <span
+                      *ngIf="customer.active === false && col.key === 'active'"
+                      class="badge badge-sm bg-gradient-danger"
+                      >Inactive</span
+                    >
+                  </span>
                 </p>
               </td>
               <td class="align-middle">
                 <a
                   [routerLink]="['/edit/customer/', customer.id]"
                   href="javascript:;"
-                  class="btn btn-warning text-xs mb-0">
+                  class="btn btn-warning text-xs mb-0"
+                >
                   <i class="fa fa-pencil"></i>
                   Edit
                 </a>
@@ -119,7 +134,8 @@ New customer
                 <a
                   (click)="removeBill(customer)"
                   class="btn btn-danger text-xs mb-0"
-                  href="javascript:;">
+                  href="javascript:;"
+                >
                   <i class="fa fa-trash"></i>
                   Delete
                 </a>
@@ -133,7 +149,7 @@ New customer
               <td></td>
               <td class="align-middle text-center text-sm">
                 Active customers:
-                <strong>{{ customerList | sum : "active"}}</strong>
+                <strong>{{ customerList | sum : "active" }}</strong>
               </td>
             </tr>
           </tbody>
@@ -143,6 +159,19 @@ New customer
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-center col-12">
-  <pagination-controls (pageChange)="page = $event" class="pagination"></pagination-controls>
+<!-- loading screen -->
+<div *ngIf="customerList.length === 0" class="text-center">
+  <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<!-- /loading screen -->
+<div
+  *ngIf="customerList.length > 0"
+  class="d-flex justify-content-center col-12"
+>
+  <pagination-controls
+    (pageChange)="page = $event"
+    class="pagination"
+  ></pagination-controls>
 </div>
