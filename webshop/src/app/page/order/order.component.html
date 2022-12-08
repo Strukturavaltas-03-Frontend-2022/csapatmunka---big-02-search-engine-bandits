@@ -1,10 +1,26 @@
+<div class="text-white rounded mx-2">
+  <h2 class="text-center">Search in columns</h2>
+  <div class="col-6 mx-auto form-group">
+    <form class="row g-3">
+      <div class="col-lg-6">
+        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
+          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        </select>
+      </div>
+      <div class="col-lg-6">
+        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+      </div>
+    </form>
+  </div>
+</div>
+
 <a
 [routerLink]="['/edit/order/']"
 href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12">
+class="btn bg-gradient-dark text-sm col-12 mt-3">
 New order
 </a>
-<div class="container-fluid py-4">
+<div class="container-fluid py-1">
   <div class="row">
     <div class="col-12">
       <div class="card my-4">
@@ -20,9 +36,18 @@ New order
             <tr>
               <th
                 *ngFor="let col of columns"
+                (click)="setSort(col.key)"
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
                 {{ col.title }}
+                <i
+                *ngIf="col.key === sortKey && sortDirection == 1"
+                class="fa fa-long-arrow-up"
+              ></i>
+              <i
+                *ngIf="col.key === sortKey && sortDirection == -1"
+                class="fa fa-long-arrow-down"
+              ></i>
               </th>
               <th></th>
               <th></th>
@@ -33,7 +58,8 @@ New order
             <tr
               *ngFor="
                 let order of orderList
-                  | filter : (phrase$ | async)
+                  | filter : searchPhrase : searchBy
+                  | sort : sortKey : sortDirection
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
@@ -113,28 +139,29 @@ New order
             </tr>
             <tr>
               <td class="align-middle text-center text-sm">
-                All order:<strong> {{ orderList.length }}</strong>
+                All orders:<strong> {{ orderList.length }}</strong>
               </td>
-              <td></td>
-              <td></td>
+              <td class="align-middle text-center text-sm">
+                All customers:<strong> {{ orderList.length}}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                All products:<strong> {{ orderList.length }}</strong>
+              </td>
               <td class="align-middle text-center text-sm">
                 All ordered car:
                 <strong>{{ orderList | sum : "amount" }}</strong>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-danger">New:</span>
-                <strong> {{ orderList | counter : "status" : "new" }}</strong>
-              </td>
-              <td class="align-middle text-center text-sm">
+                <strong class="me-1"> {{ orderList | counter : "status" : "new" }}</strong>
                 <span class="badge badge-sm bg-gradient-warning">Shipped:</span>
-                <strong>
-                  {{ orderList | counter : "status" : "shipped" }}</strong
-                >
-              </td>
-              <td class="align-middle text-center text-sm">
+                <strong class="me-1">
+                  {{ orderList | counter : "status" : "shipped" }}</strong>
                 <span class="badge badge-sm bg-gradient-success">Paid:</span>
-                <strong> {{ orderList | counter : "status" : "paid" }}</strong>
+                <strong class="me-1"> {{ orderList | counter : "status" : "paid" }}</strong>
               </td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -142,7 +169,6 @@ New order
     </div>
   </div>
 </div>
-
-
-
-<pagination-controls (pageChange)="page = $event"></pagination-controls>
+<div class="d-flex justify-content-center col-12">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

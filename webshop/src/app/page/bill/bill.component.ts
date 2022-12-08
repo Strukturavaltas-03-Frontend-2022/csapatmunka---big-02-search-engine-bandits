@@ -20,10 +20,14 @@ export class BillComponent implements OnInit {
   billList: Bill[] = [];
 
   //searcher
-  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+  searchPhrase:string = "";
+  searchBy:string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.billTableColumns;
+
+  sortKey: string = 'id';
+  sortDirection: number = 1;
 
   constructor() {}
 
@@ -47,5 +51,16 @@ export class BillComponent implements OnInit {
           })
         );
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
+  }
+
+  onSearch(event:any) : void {
+    this.searchPhrase = event.target.value;
   }
 }

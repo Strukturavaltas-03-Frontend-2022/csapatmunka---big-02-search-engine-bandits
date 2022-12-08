@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
 import { Product } from 'src/app/model/product';
@@ -34,10 +34,14 @@ export class OrderComponent implements OnInit {
   orderList: Order[] = [];
 
   //searcher
-  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+  searchPhrase:string = "";
+  searchBy:string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.orderTableColumns;
+
+  sortKey: string = 'id';
+  sortDirection: number = 1;
 
   constructor() {}
 
@@ -66,5 +70,16 @@ export class OrderComponent implements OnInit {
           })
         );
     }
+  }
+
+  setSort(key:string): void {
+    if(key === this.sortKey) {
+      this.sortDirection *= -1;
+    }
+    this.sortKey = key;
+  }
+
+  onSearch(event:any) : void {
+    this.searchPhrase = event.target.value;
   }
 }

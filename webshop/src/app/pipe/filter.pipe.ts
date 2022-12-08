@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Address } from '../model/address';
-import { Customer } from '../model/customer';
+
+const possibleBooleanProperties = [ 'active', 'featured' ];
 
 @Pipe({
   name: 'filter',
@@ -8,35 +8,39 @@ import { Customer } from '../model/customer';
 export class FilterPipe<T extends { [x: string]: any }>
   implements PipeTransform
 {
-  transform(value: Customer[], phrase: string = ''): Customer[] {
+  transform(value: T[], phrase: string = '', property:string = ''): T[] {
     if (!Array.isArray(value) || !phrase) {
       return value;
     }
 
-    phrase = phrase.toLowerCase();
+    let filteredArray:T[] = value.filter(item =>{
+      if(property === 'address') {
+        return Object.values(item[property]).join().includes(phrase);
+      }
 
-    let filteredArray = [];
+      if(possibleBooleanProperties.includes(property)){
+        let valueToLookFor:boolean = false;
+        switch(phrase.toLowerCase())
+        {
+          case 'yes':
+            valueToLookFor = true;
+            break;
+          case 'no':
+            valueToLookFor = false;
+            break;
+          default:
+            return true;
+        }
+        
+        return item[property] === valueToLookFor;
+      }
 
-    if ('active'.startsWith(phrase))
-      filteredArray = value.filter(
-        (i) =>
-          Object.values(i).join(' ').toLowerCase().includes(phrase) ||
-          Object.values(i.address).join(' ').toLowerCase().includes(phrase) ||
-          i.active === true
-      );
-    else if ('inactive'.startsWith(phrase))
-      filteredArray = value.filter(
-        (i) =>
-          Object.values(i).join(' ').toLowerCase().includes(phrase) ||
-          Object.values(i.address).join(' ').toLowerCase().includes(phrase) ||
-          i.active === false
-      );
-    else
-      filteredArray = value.filter(
-        (i) =>
-          Object.values(i).join(' ').toLowerCase().includes(phrase) ||
-          Object.values(i.address).join(' ').toLowerCase().includes(phrase)
-      );
+      if(!isNaN(item[property])) {
+        return item[property] === Number(phrase);
+      }
+
+      return item[property].includes(phrase);
+    });
 
     return filteredArray;
   }

@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { SortPipe } from './pipe/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ToastrModule } from 'ngx-toastr';
     SumPipe,
     CounterPipe,
     IdconverterPipe,
+    SortPipe,
   ],
   imports: [
     BrowserModule,

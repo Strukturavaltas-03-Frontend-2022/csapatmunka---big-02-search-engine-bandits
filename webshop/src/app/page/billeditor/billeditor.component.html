@@ -1,5 +1,11 @@
-<div class="mt-4 p-5 text-white rounded mt-3 jumbotron">
-  <h1 class="hotstitle">Bill Editor</h1>
+<div class="p-5 text-white rounded mt-2">
+  <h1 class="hotstitle text-center">Bill Editor</h1>
+  <div class="hr-theme-slash-2">
+    <div class="hr-line"></div>
+    <div class="hr-icon"><i class="fa fa-circle"></i></div>
+    <div class="hr-line"></div>
+  </div>
+  <div class="col-6 mx-auto form-group">
   <form
     (ngSubmit)="onSubmit(bill)"
     #billForm="ngForm"
@@ -18,7 +24,7 @@
         id="id"
       />
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-11">
       <label for="order" class="form-label formtext">Order</label>
       <select
       [(ngModel)]="bill.orderID"
@@ -38,27 +44,26 @@
       </option>
     </select>
     </div>
-    <div class="col-lg-2">
-      <label for="amount" class="form-label formtext">Amount</label>
+    <div class="col-lg-6">
+      <label for="amount" class="form-label formtext">Amount $</label>
       <input
-        [(ngModel)]="bill.amount"
+        [(ngModel)]="bill.amount "
         [disabled]="checked"
         #amount="ngModel"
         name="amount"
         type="text"
         class="form-control formtext"
         id="amount"
-        pattern="[0-5]{1,2}"
         required
       />
       <div
         [hidden]="amount.valid || amount.pristine || amount.disabled"
-        class="alert alert-danger"
+        class="font-weight-bold text-danger"
       >
-        How many card? (max. 5)
+        How much?
       </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <label for="status" class="form-label formtext"
         >Bill status</label
       >
@@ -80,7 +85,7 @@
         </option>
       </select>
     </div>
-    <div class="form-check formtext">
+    <div class="form-check formtext text-center">
       <input
         (change)="onChecked()"
         class="form-check-input"
@@ -94,7 +99,7 @@
         I want to save bill!
       </label>
     </div>
-    <div class="col-12">
+    <div class="col-12 text-center">
       <button
         [disabled]="billForm.form.invalid || checked === false"
         type="submit"
@@ -104,4 +109,5 @@
       </button>
     </div>
   </form>
+</div>
 </div>

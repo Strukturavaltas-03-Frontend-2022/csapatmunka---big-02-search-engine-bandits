@@ -1,10 +1,26 @@
+<div class="text-white rounded mx-2">
+  <h2 class="text-center">Search in columns</h2>
+  <div class="col-6 mx-auto form-group">
+    <form class="row g-3">
+      <div class="col-lg-6">
+        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
+          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        </select>
+      </div>
+      <div class="col-lg-6">
+        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+      </div>
+    </form>
+  </div>
+</div>
+
 <a
 [routerLink]="['/edit/product/']"
 href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12">
+class="btn bg-gradient-dark text-sm col-12 mt-3">
 New product
 </a>
-<div class="container-fluid py-4">
+<div class="container-fluid py-1">
   <div class="row">
     <div class="col-12">
       <div class="card my-4">
@@ -20,9 +36,18 @@ New product
             <tr>
               <th
                 *ngFor="let col of columns"
+                (click)="setSort(col.key)"
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5"
               >
                 {{ col.title }}
+                <i
+                *ngIf="col.key === sortKey && sortDirection == 1"
+                class="fa fa-long-arrow-up"
+              ></i>
+              <i
+                *ngIf="col.key === sortKey && sortDirection == -1"
+                class="fa fa-long-arrow-down"
+              ></i>
               </th>
               <th></th>
               <th></th>
@@ -33,7 +58,8 @@ New product
             <tr
               *ngFor="
                 let product of productList
-                  | filter : (phrase$ | async)
+                  | filter : searchPhrase : searchBy
+                  | sort : sortKey : sortDirection
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "
             >
@@ -85,69 +111,13 @@ New product
                     }}</span>
                   </span>
                   <span *ngSwitchCase="product.price">{{
-                    product.price
+                    product.price | currency: 'USD'
                   }}</span>
                   <span *ngSwitchCase="product.description">{{
                     product.description
                   }}</span>
                 </p>
               </td>
-              <!-- <td
-                *ngFor="let col of columns"
-                class="align-middle text-center text-sm"
-              ></td>
-              <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ product.id }}</p>
-              </td>
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">
-                      {{ product.name }}
-                    </h6>
-                    <p class="text-xs text-secondary mb-0">
-                      {{ product.type }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ product.catID }}</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ product.description }}
-                </p>
-              </td>
-
-              <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ product.price }}</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  *ngIf="product.featured"
-                  class="badge badge-sm bg-gradient-success"
-                  >Active</span
-                >
-                <span
-                  *ngIf="!product.featured"
-                  class="badge badge-sm bg-gradient-danger"
-                  >Inactive</span
-                >
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  *ngIf="product.active"
-                  class="badge badge-sm bg-gradient-success"
-                  >Active</span
-                >
-                <span
-                  *ngIf="!product.active"
-                  class="badge badge-sm bg-gradient-danger"
-                  >Inactive</span
-                >
-              </td> -->
-
               <td class="align-middle">
                 <a
                   [routerLink]="['/edit/product/', product.id]"
@@ -167,13 +137,35 @@ New product
                 </a>
               </td>
             </tr>
+            <tr>
+              <td class="align-middle text-center text-sm">
+                All products:<strong> {{ productList.length }}</strong>
+              </td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+              Green cars:
+                <strong> {{ productList | counter : "catID" : 3 }}</strong>
+              </td>
+              <td></td>
+              <td class="align-middle text-center text-sm">
+                Total liquid assets:
+                <strong>{{ productList | sum : "price" | currency:'USD' }}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                Featured:
+                <strong>{{ productList | sum : "featured"}}</strong>
+              </td>
+              <td class="align-middle text-center text-sm">
+                Active:
+                <strong> {{ productList | sum : "active"}}</strong>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-
-
-
-<pagination-controls (pageChange)="page = $event"></pagination-controls>
+<div class="d-flex justify-content-center col-12">
+  <pagination-controls (pageChange)="page = $event" class="pagination"></pagination-controls>
+</div>

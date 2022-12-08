@@ -1,5 +1,11 @@
-<div class="mt-4 p-5 text-white rounded mt-3 jumbotron">
-    <h1 class="hotstitle">Order Editor</h1>
+<div class="p-5 text-white rounded mt-2">
+    <h1 class="hotstitle text-center">Order Editor</h1>
+    <div class="hr-theme-slash-2">
+      <div class="hr-line"></div>
+      <div class="hr-icon"><i class="fa fa-circle"></i></div>
+      <div class="hr-line"></div>
+    </div>
+    <div class="col-6 mx-auto form-group">
     <form
       (ngSubmit)="onSubmit(order)"
       #orderForm="ngForm"
@@ -18,7 +24,7 @@
           disabled="true"
         />
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-11">
         <label for="customerId" class="form-label formtext">Customer</label>
         <select
           [(ngModel)]="order.customerID"
@@ -38,7 +44,7 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <label for="productId" class="form-label formtext">Product</label>
         <select
           [(ngModel)]="order.productID"
@@ -59,7 +65,7 @@
         </select>
       </div>
   
-      <div class="col-lg-2">
+      <div class="col-lg-6">
         <label for="amount" class="form-label formtext">Amount</label>
         <input
           [(ngModel)]="order.amount"
@@ -73,13 +79,13 @@
         />
         <div
           [hidden]="amount.valid || amount.pristine || amount.disabled"
-          class="alert alert-danger"
+          class="font-weight-bold text-danger"
         >
           Add amount of product!
         </div>
       </div>
   
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <label for="status" class="form-label formtext"
           >Is this order paid?</label
         >
@@ -102,7 +108,7 @@
         </select>
       </div>
   
-      <div class="form-check formtext">
+      <div class="form-check formtext text-center">
         <input
           (change)="onChecked()"
           class="form-check-input"
@@ -116,7 +122,7 @@
           I want to save order settings!
         </label>
       </div>
-      <div class="col-12">
+      <div class="col-12 text-center">
         <button
           [disabled]="orderForm.form.invalid || checked === false"
           type="submit"
@@ -127,4 +133,5 @@
       </div>
     </form>
   </div>
+</div>
   
