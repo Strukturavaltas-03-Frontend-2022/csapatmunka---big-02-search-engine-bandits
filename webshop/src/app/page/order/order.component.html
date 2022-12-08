@@ -1,10 +1,26 @@
+<div class="text-white rounded mx-2">
+  <h2 class="text-center">Search in columns</h2>
+  <div class="col-6 mx-auto form-group">
+    <form class="row g-3">
+      <div class="col-lg-6">
+        <select name="searchBy" class="form-select col-4" aria-label="select" [(ngModel)]="searchBy">
+          <option *ngFor="let col of columns" [value]="col.key" selected>{{col.title}}</option>
+        </select>
+      </div>
+      <div class="col-lg-6">
+        <input (input)="onSearch($event)" class="form-control col-lg-4" type="text" placeholder="Search..." aria-label="search input">
+      </div>
+    </form>
+  </div>
+</div>
+
 <a
 [routerLink]="['/edit/order/']"
 href="javascript:;"
-class="btn bg-gradient-dark text-sm col-12">
+class="btn bg-gradient-dark text-sm col-12 mt-3">
 New order
 </a>
-<div class="container-fluid py-4">
+<div class="container-fluid py-1">
   <div class="row">
     <div class="col-12">
       <div class="card my-4">
@@ -42,7 +58,7 @@ New order
             <tr
               *ngFor="
                 let order of orderList
-                  | filter : (phrase$ | async)
+                  | filter : searchPhrase : searchBy
                   | sort : sortKey : sortDirection
                   | paginate : { itemsPerPage: 10, currentPage: page }
               "

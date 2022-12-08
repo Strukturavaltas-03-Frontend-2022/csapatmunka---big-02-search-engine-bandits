@@ -23,7 +23,8 @@ export class ProductComponent implements OnInit {
   productList: Product[] = [];
 
   //searcher
-  phrase$: BehaviorSubject<string> = this.configService.searchPhrase$;
+  searchPhrase:string = "";
+  searchBy:string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.productTableColumns;
@@ -59,5 +60,9 @@ export class ProductComponent implements OnInit {
       this.sortDirection *= -1;
     }
     this.sortKey = key;
+  }
+
+  onSearch(event:any) : void {
+    this.searchPhrase = event.target.value;
   }
 }
