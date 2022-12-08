@@ -46,119 +46,125 @@
           </div>
         </div>
         <div class="table-responsive">
-        <table class="table align-items-center mb-0">
-          <thead>
-            <tr>
-              <th
-                *ngFor="let col of columns"
-                (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center user-select-none"
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr
+                cdkDropList
+                cdkDropListOrientation="horizontal"
+                class="collist"
+                (cdkDropListDropped)="drop($event)"
               >
-                {{ col.title }}
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == 1"
-                  class="fa fa-long-arrow-up"
-                ></i>
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == -1"
-                  class="fa fa-long-arrow-down"
-                ></i>
-              </th>
-              <th></th>
-              <th></th>
-              <th class="text-secondary opacity-7"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let bill of billList
-                  | filter : searchPhrase : searchBy
-                  | sort : sortKey : sortDirection
-                  | paginate : { itemsPerPage: 10, currentPage: page }
-              "
-            >
-              <td
-                *ngFor="let col of columns"
-                class="align-middle text-center text-sm"
+                <th
+                  *ngFor="let col of columns"
+                  (click)="setSort(col.key)"
+                  cdkDrag
+                  class="colBox text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center user-select-none"
+                >
+                  {{ col.title }}
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == 1"
+                    class="fa fa-long-arrow-up"
+                  ></i>
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == -1"
+                    class="fa fa-long-arrow-down"
+                  ></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let bill of billList
+                    | filter : searchPhrase : searchBy
+                    | sort : sortKey : sortDirection
+                    | paginate : { itemsPerPage: 10, currentPage: page }
+                "
               >
-                <p
-                  *ngIf="col.key == 'amount'"
-                  class="text-xs font-weight-bold mb-0"
+                <td
+                  *ngFor="let col of columns"
+                  class="align-middle text-center text-sm"
                 >
-                  {{ bill[col.key] | currency : "USD" }}
-                </p>
-                <!-- !status -->
-                <p
-                  *ngIf="col.key !== 'status' && col.key !== 'amount'"
-                  class="text-xs font-weight-bold mb-0"
-                >
-                  {{ bill[col.key] }}
-                </p>
+                  <p
+                    *ngIf="col.key == 'amount'"
+                    class="text-xs font-weight-bold mb-0"
+                  >
+                    {{ bill[col.key] | currency : "USD" }}
+                  </p>
+                  <!-- !status -->
+                  <p
+                    *ngIf="col.key !== 'status' && col.key !== 'amount'"
+                    class="text-xs font-weight-bold mb-0"
+                  >
+                    {{ bill[col.key] }}
+                  </p>
 
-                <!-- status -->
-                <p
-                  *ngIf="col.key === 'status'"
-                  class="text-xs font-weight-bold mb-0"
-                >
-                  <span
-                    *ngIf="bill.status === 'paid'"
-                    class="badge badge-sm bg-gradient-success"
-                    >{{ bill.status }}</span
+                  <!-- status -->
+                  <p
+                    *ngIf="col.key === 'status'"
+                    class="text-xs font-weight-bold mb-0"
                   >
-                  <span
-                    *ngIf="bill.status === 'new'"
-                    class="badge badge-sm bg-gradient-danger"
-                    >{{ bill.status }}</span
+                    <span
+                      *ngIf="bill.status === 'paid'"
+                      class="badge badge-sm bg-gradient-success"
+                      >{{ bill.status }}</span
+                    >
+                    <span
+                      *ngIf="bill.status === 'new'"
+                      class="badge badge-sm bg-gradient-danger"
+                      >{{ bill.status }}</span
+                    >
+                  </p>
+                </td>
+                <td class="align-middle">
+                  <a
+                    [routerLink]="['/edit/bill/', bill.id]"
+                    href="javascript:;"
+                    class="btn btn-warning text-xs mb-0"
                   >
-                </p>
-              </td>
-              <td class="align-middle">
-                <a
-                  [routerLink]="['/edit/bill/', bill.id]"
-                  href="javascript:;"
-                  class="btn btn-warning text-xs mb-0"
-                >
-                  <i class="fa fa-pencil"></i>
-                  Edit
-                </a>
-              </td>
-              <td class="align-middle">
-                <a
-                  (click)="removeBill(bill)"
-                  class="btn btn-danger text-xs mb-0"
-                  href="javascript:;"
-                >
-                  <i class="fa fa-trash"></i>
-                  Delete
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="align-middle text-center text-sm">
-                All bills:<strong> {{ billList.length }}</strong>
-              </td>
-              <td></td>
-              <td class="align-middle text-center text-sm">
-                Expected Income:
-                <strong>{{
-                  billList | sum : "amount" | currency : "USD"
-                }}</strong>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-danger">New:</span>
-                <strong class="me-1">
-                  {{ billList | counter : "status" : "new" }}</strong
-                >
-                <span class="badge badge-sm bg-gradient-success">Paid:</span>
-                <strong class="me-1">
-                  {{ billList | counter : "status" : "paid" }}</strong
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                  </a>
+                </td>
+                <td class="align-middle">
+                  <a
+                    (click)="removeBill(bill)"
+                    class="btn btn-danger text-xs mb-0"
+                    href="javascript:;"
+                  >
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center text-sm">
+                  All bills:<strong> {{ billList.length }}</strong>
+                </td>
+                <td></td>
+                <td class="align-middle text-center text-sm">
+                  Expected Income:
+                  <strong>{{
+                    billList | sum : "amount" | currency : "USD"
+                  }}</strong>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  <span class="badge badge-sm bg-gradient-danger">New:</span>
+                  <strong class="me-1">
+                    {{ billList | counter : "status" : "new" }}</strong
+                  >
+                  <span class="badge badge-sm bg-gradient-success">Paid:</span>
+                  <strong class="me-1">
+                    {{ billList | counter : "status" : "paid" }}</strong
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

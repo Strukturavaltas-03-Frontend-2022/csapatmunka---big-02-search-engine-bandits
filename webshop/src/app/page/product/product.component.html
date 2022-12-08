@@ -46,153 +46,162 @@
           </div>
         </div>
         <div class="table-responsive">
-        <table class="table align-items-center mb-0">
-          <thead>
-            <tr>
-              <th
-                *ngFor="let col of columns"
-                (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr
+                cdkDropList
+                cdkDropListOrientation="horizontal"
+                class="collist"
+                (cdkDropListDropped)="drop($event)"
               >
-                {{ col.title }}
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == 1"
-                  class="fa fa-long-arrow-up"
-                ></i>
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == -1"
-                  class="fa fa-long-arrow-down"
-                ></i>
-              </th>
-              <th></th>
-              <th></th>
-              <th class="text-secondary opacity-7"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let product of productList
-                  | filter : searchPhrase : searchBy
-                  | sort : sortKey : sortDirection
-                  | paginate : { itemsPerPage: 10, currentPage: page }
-              "
-            >
-              <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
-                <p
-                  class="text-xs font-weight-bold mb-0"
-                  [ngSwitch]="product[col.key]"
+                <th
+                  *ngFor="let col of columns"
+                  cdkDrag
+                  (click)="setSort(col.key)"
+                  class="colBox text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
                 >
-                  <span *ngSwitchCase="product.id">
-                    <span *ngIf="col.key === 'id'">{{ product.id }}</span>
-                  </span>
-
-                  <span *ngSwitchCase="product.active">
-                    <span *ngIf="col.key === 'active'">
-                      <span
-                        *ngIf="product.active === false"
-                        class="badge badge-sm bg-gradient-danger"
-                      >
-                        No
-                      </span>
-                      <span
-                        *ngIf="product.active === true"
-                        class="badge badge-sm bg-gradient-success"
-                      >
-                        Yes
-                      </span>
-                    </span>
-                  </span>
-
-                  <span *ngSwitchCase="product.featured">
-                    <span *ngIf="col.key === 'featured'">
-                      <span
-                        *ngIf="product.featured === false"
-                        class="badge badge-sm bg-gradient-danger"
-                      >
-                        No
-                      </span>
-                      <span
-                        *ngIf="product.featured === true"
-                        class="badge badge-sm bg-gradient-success"
-                      >
-                        Yes
-                      </span>
-                    </span>
-                  </span>
-
-                  <span *ngSwitchCase="product.name">
-                    <span>{{ product.name }}</span>
-                    <br />
-                    <span class="text-xs text-secondary mb-0">{{
-                      product.type
-                    }}</span>
-                  </span>
-                  <span *ngSwitchCase="product.catID">
-                    <span *ngIf="col.key === 'catID'">{{
-                      category[product.catID - 1].name
-                    }}</span>
-                  </span>
-                  <span *ngSwitchCase="product.price">{{
-                    product.price | currency : "USD"
-                  }}</span>
-                  <span
-                    *ngSwitchCase="product.description"
-                    class="d-inline-block text-truncate"
-                    style="max-width: 200px"
-                    >{{ product.description }}</span
+                  {{ col.title }}
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == 1"
+                    class="fa fa-long-arrow-up"
+                  ></i>
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == -1"
+                    class="fa fa-long-arrow-down"
+                  ></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let product of productList
+                    | filter : searchPhrase : searchBy
+                    | sort : sortKey : sortDirection
+                    | paginate : { itemsPerPage: 10, currentPage: page }
+                "
+              >
+                <td
+                  *ngFor="let col of columns"
+                  class="align-middle text-sm ps-5"
+                >
+                  <p
+                    class="text-xs font-weight-bold mb-0"
+                    [ngSwitch]="product[col.key]"
                   >
-                </p>
-              </td>
-              <td class="align-middle">
-                <a
-                  [routerLink]="['/edit/product/', product.id]"
-                  href="javascript:;"
-                  class="btn btn-warning text-xs mb-0"
-                >
-                  <i class="fa fa-pencil"></i>
-                  Edit
-                </a>
-              </td>
-              <td class="align-middle">
-                <a
-                  (click)="removeBill(product)"
-                  class="btn btn-danger text-xs mb-0"
-                  href="javascript:;"
-                >
-                  <i class="fa fa-trash"></i>
-                  Delete
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="align-middle text-center text-sm">
-                All products:<strong> {{ productList.length }}</strong>
-              </td>
-              <td></td>
-              <td class="align-middle text-center text-sm">
-                Green cars:
-                <strong> {{ productList | counter : "catID" : 3 }}</strong>
-              </td>
-              <td></td>
-              <td class="align-middle text-center text-sm">
-                Total liquid assets:
-                <strong>{{
-                  productList | sum : "price" | currency : "USD"
-                }}</strong>
-              </td>
-              <td class="align-middle text-center text-sm">
-                Featured:
-                <strong>{{ productList | sum : "featured" }}</strong>
-              </td>
-              <td class="align-middle text-center text-sm">
-                Active:
-                <strong> {{ productList | sum : "active" }}</strong>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                    <span *ngSwitchCase="product.id">
+                      <span *ngIf="col.key === 'id'">{{ product.id }}</span>
+                    </span>
+
+                    <span *ngSwitchCase="product.active">
+                      <span *ngIf="col.key === 'active'">
+                        <span
+                          *ngIf="product.active === false"
+                          class="badge badge-sm bg-gradient-danger"
+                        >
+                          No
+                        </span>
+                        <span
+                          *ngIf="product.active === true"
+                          class="badge badge-sm bg-gradient-success"
+                        >
+                          Yes
+                        </span>
+                      </span>
+                    </span>
+
+                    <span *ngSwitchCase="product.featured">
+                      <span *ngIf="col.key === 'featured'">
+                        <span
+                          *ngIf="product.featured === false"
+                          class="badge badge-sm bg-gradient-danger"
+                        >
+                          No
+                        </span>
+                        <span
+                          *ngIf="product.featured === true"
+                          class="badge badge-sm bg-gradient-success"
+                        >
+                          Yes
+                        </span>
+                      </span>
+                    </span>
+
+                    <span *ngSwitchCase="product.name">
+                      <span>{{ product.name }}</span>
+                      <br />
+                      <span class="text-xs text-secondary mb-0">{{
+                        product.type
+                      }}</span>
+                    </span>
+                    <span *ngSwitchCase="product.catID">
+                      <span *ngIf="col.key === 'catID'">{{
+                        category[product.catID - 1].name
+                      }}</span>
+                    </span>
+                    <span *ngSwitchCase="product.price">{{
+                      product.price | currency : "USD"
+                    }}</span>
+                    <span
+                      *ngSwitchCase="product.description"
+                      class="d-inline-block text-truncate"
+                      style="max-width: 200px"
+                      >{{ product.description }}</span
+                    >
+                  </p>
+                </td>
+                <td class="align-middle">
+                  <a
+                    [routerLink]="['/edit/product/', product.id]"
+                    href="javascript:;"
+                    class="btn btn-warning text-xs mb-0"
+                  >
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                  </a>
+                </td>
+                <td class="align-middle">
+                  <a
+                    (click)="removeBill(product)"
+                    class="btn btn-danger text-xs mb-0"
+                    href="javascript:;"
+                  >
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center text-sm">
+                  All products:<strong> {{ productList.length }}</strong>
+                </td>
+                <td></td>
+                <td class="align-middle text-center text-sm">
+                  Green cars:
+                  <strong> {{ productList | counter : "catID" : 3 }}</strong>
+                </td>
+                <td></td>
+                <td class="align-middle text-center text-sm">
+                  Total liquid assets:
+                  <strong>{{
+                    productList | sum : "price" | currency : "USD"
+                  }}</strong>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  Featured:
+                  <strong>{{ productList | sum : "featured" }}</strong>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  Active:
+                  <strong> {{ productList | sum : "active" }}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

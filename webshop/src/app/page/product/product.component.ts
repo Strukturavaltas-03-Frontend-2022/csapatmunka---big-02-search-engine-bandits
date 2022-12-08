@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -14,7 +15,7 @@ import { ProductService } from 'src/app/service/product.service';
 export class ProductComponent implements OnInit {
   productService: ProductService = inject(ProductService);
   configService: ConfigService = inject(ConfigService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
 
   productList$: Observable<Product[]> = this.productService.getAll();
 
@@ -23,8 +24,8 @@ export class ProductComponent implements OnInit {
   productList: Product[] = [];
 
   //searcher
-  searchPhrase:string = "";
-  searchBy:string = 'name';
+  searchPhrase: string = '';
+  searchBy: string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.productTableColumns;
@@ -45,24 +46,32 @@ export class ProductComponent implements OnInit {
 
   removeBill(product: Product): void {
     if (confirm('Are you sure?')) {
-      this.productService
-        .remove(product)
-        .subscribe(() =>
-          this.productService.getAll().subscribe(products =>{
-            this.toastr.error('Product deleted successfully!', 'Product deleted!', { timeOut: 3000 });
-            this.productList = products;
-          }));
+      this.productService.remove(product).subscribe(() =>
+        this.productService.getAll().subscribe((products) => {
+          this.toastr.error(
+            'Product deleted successfully!',
+            'Product deleted!',
+            { timeOut: 3000 }
+          );
+          this.productList = products;
+        })
+      );
     }
   }
 
-  setSort(key:string): void {
-    if(key === this.sortKey) {
+  setSort(key: string): void {
+    if (key === this.sortKey) {
       this.sortDirection *= -1;
     }
     this.sortKey = key;
   }
 
-  onSearch(event:any) : void {
+  onSearch(event: any): void {
     this.searchPhrase = event.target.value;
+  }
+
+  //Drag and Drop
+  drop(event: CdkDragDrop<{ title: string; key: string }[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 }

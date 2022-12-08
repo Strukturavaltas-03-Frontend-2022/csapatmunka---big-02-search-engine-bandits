@@ -46,115 +46,127 @@
           </div>
         </div>
         <div class="table-responsive">
-        <table class="table align-items-center mb-0">
-          <thead>
-            <tr>
-              <th
-                *ngFor="let col of columns"
-                (click)="setSort(col.key)"
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr
+                cdkDropList
+                cdkDropListOrientation="horizontal"
+                class="collist"
+                (cdkDropListDropped)="drop($event)"
               >
-                {{ col.title }}
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == 1"
-                  class="fa fa-long-arrow-up"
-                ></i>
-                <i
-                  *ngIf="col.key === sortKey && sortDirection == -1"
-                  class="fa fa-long-arrow-down"
-                ></i>
-              </th>
-              <th></th>
-              <th></th>
-              <th class="text-secondary opacity-7"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let customer of customerList
-                  | filter : searchPhrase : searchBy
-                  | sort : sortKey : sortDirection
-                  | paginate : { itemsPerPage: 10, currentPage: page }
-              "
-            >
-              <td *ngFor="let col of columns" class="align-middle text-sm ps-5">
-                <p
-                  class="text-xs font-weight-bold mb-0"
-                  [ngSwitch]="customer[col.key]"
+                <th
+                  *ngFor="let col of columns"
+                  cdkDrag
+                  (click)="setSort(col.key)"
+                  class="colBox text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5 user-select-none"
                 >
-                  <span *ngSwitchCase="customer.id">
-                    <span *ngIf="col.key === 'id'">{{ customer.id }}</span>
-                  </span>
-                  <span *ngSwitchCase="customer.lastName">
-                    <span class="mb-0 text-sm"
-                      >{{ customer.firstName }} {{ customer.lastName }}</span
-                    ><br />
-                    <span class="text-xs text-secondary mb-0">
-                      {{ customer.email }}</span
-                    >
-                  </span>
-                  <span *ngSwitchCase="customer.address">
-                    <span class="mb-0 text-sm">
-                      {{ customer.address.country }}</span
-                    ><br />
-                    <!-- Viktor miatt nem jelenítjük meg a Nodes-t, mert semmi értelmét nem látja a táblázatban való megjelenítésnek :) -->
-                    <span class="text-xs text-secondary mb-0"
-                      >{{ customer.address.zip }}, {{ customer.address.city }},
-                      {{ customer.address.street }}</span
-                    >
-                  </span>
-                  <span *ngSwitchCase="customer.active">
-                    <span
-                      *ngIf="customer.active === true && col.key === 'active'"
-                      class="badge badge-sm bg-gradient-success"
-                      >Active</span
-                    >
-                  </span>
-                  <span *ngSwitchCase="customer.active">
-                    <span
-                      *ngIf="customer.active === false && col.key === 'active'"
-                      class="badge badge-sm bg-gradient-danger"
-                      >Inactive</span
-                    >
-                  </span>
-                </p>
-              </td>
-              <td class="align-middle">
-                <a
-                  [routerLink]="['/edit/customer/', customer.id]"
-                  href="javascript:;"
-                  class="btn btn-warning text-xs mb-0"
+                  {{ col.title }}
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == 1"
+                    class="fa fa-long-arrow-up"
+                  ></i>
+                  <i
+                    *ngIf="col.key === sortKey && sortDirection == -1"
+                    class="fa fa-long-arrow-down"
+                  ></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let customer of customerList
+                    | filter : searchPhrase : searchBy
+                    | sort : sortKey : sortDirection
+                    | paginate : { itemsPerPage: 10, currentPage: page }
+                "
+              >
+                <td
+                  *ngFor="let col of columns"
+                  class="align-middle text-sm ps-5"
                 >
-                  <i class="fa fa-pencil"></i>
-                  Edit
-                </a>
-              </td>
-              <td class="align-middle">
-                <a
-                  (click)="removeBill(customer)"
-                  class="btn btn-danger text-xs mb-0"
-                  href="javascript:;"
-                >
-                  <i class="fa fa-trash"></i>
-                  Delete
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="align-middle text-center text-sm">
-                All customers:<strong> {{ customerList.length }}</strong>
-              </td>
-              <td></td>
-              <td></td>
-              <td class="align-middle text-center text-sm">
-                Active customers:
-                <strong>{{ customerList | sum : "active" }}</strong>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                  <p
+                    class="text-xs font-weight-bold mb-0"
+                    [ngSwitch]="customer[col.key]"
+                  >
+                    <span *ngSwitchCase="customer.id">
+                      <span *ngIf="col.key === 'id'">{{ customer.id }}</span>
+                    </span>
+                    <span *ngSwitchCase="customer.lastName">
+                      <span class="mb-0 text-sm"
+                        >{{ customer.firstName }} {{ customer.lastName }}</span
+                      ><br />
+                      <span class="text-xs text-secondary mb-0">
+                        {{ customer.email }}</span
+                      >
+                    </span>
+                    <span *ngSwitchCase="customer.address">
+                      <span class="mb-0 text-sm">
+                        {{ customer.address.country }}</span
+                      ><br />
+                      <!-- Viktor miatt nem jelenítjük meg a Nodes-t, mert semmi értelmét nem látja a táblázatban való megjelenítésnek :) -->
+                      <span class="text-xs text-secondary mb-0"
+                        >{{ customer.address.zip }},
+                        {{ customer.address.city }},
+                        {{ customer.address.street }}</span
+                      >
+                    </span>
+                    <span *ngSwitchCase="customer.active">
+                      <span
+                        *ngIf="customer.active === true && col.key === 'active'"
+                        class="badge badge-sm bg-gradient-success"
+                        >Active</span
+                      >
+                    </span>
+                    <span *ngSwitchCase="customer.active">
+                      <span
+                        *ngIf="
+                          customer.active === false && col.key === 'active'
+                        "
+                        class="badge badge-sm bg-gradient-danger"
+                        >Inactive</span
+                      >
+                    </span>
+                  </p>
+                </td>
+                <td class="align-middle">
+                  <a
+                    [routerLink]="['/edit/customer/', customer.id]"
+                    href="javascript:;"
+                    class="btn btn-warning text-xs mb-0"
+                  >
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                  </a>
+                </td>
+                <td class="align-middle">
+                  <a
+                    (click)="removeBill(customer)"
+                    class="btn btn-danger text-xs mb-0"
+                    href="javascript:;"
+                  >
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center text-sm">
+                  All customers:<strong> {{ customerList.length }}</strong>
+                </td>
+                <td></td>
+                <td></td>
+                <td class="align-middle text-center text-sm">
+                  Active customers:
+                  <strong>{{ customerList | sum : "active" }}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

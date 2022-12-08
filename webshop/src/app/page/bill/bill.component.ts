@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Bill } from 'src/app/model/bill';
 import { BillService } from 'src/app/service/bill.service';
 import { ConfigService, ITableColumn } from 'src/app/service/config.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-bill',
@@ -62,5 +63,10 @@ export class BillComponent implements OnInit {
 
   onSearch(event: any): void {
     this.searchPhrase = event.target.value;
+  }
+
+  //Drag and Drop
+  drop(event: CdkDragDrop<{ title: string; key: string }[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 }

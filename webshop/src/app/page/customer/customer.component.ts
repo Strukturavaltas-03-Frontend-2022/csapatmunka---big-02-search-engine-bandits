@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 import { CustomerService } from 'src/app/service/customer.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-customer',
@@ -63,5 +64,10 @@ export class CustomerComponent implements OnInit {
 
   onSearch(event: any): void {
     this.searchPhrase = event.target.value;
+  }
+
+  //Drag and Drop
+  drop(event: CdkDragDrop<{ title: string; key: string }[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 }

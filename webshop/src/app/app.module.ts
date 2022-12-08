@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -59,6 +60,7 @@ import { SortPipe } from './pipe/sort.pipe';
     NgApexchartsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

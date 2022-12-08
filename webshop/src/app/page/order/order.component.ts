@@ -8,6 +8,7 @@ import { ConfigService, ITableColumn } from 'src/app/service/config.service';
 import { CustomerService } from 'src/app/service/customer.service';
 import { OrderService } from 'src/app/service/order.service';
 import { ProductService } from 'src/app/service/product.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-order',
@@ -19,7 +20,7 @@ export class OrderComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
   productService: ProductService = inject(ProductService);
   configService: ConfigService = inject(ConfigService);
-  toastr:ToastrService = inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
 
   orderList$: Observable<Order[]> = this.orderService.getAll();
 
@@ -34,8 +35,8 @@ export class OrderComponent implements OnInit {
   orderList: Order[] = [];
 
   //searcher
-  searchPhrase:string = "";
-  searchBy:string = 'name';
+  searchPhrase: string = '';
+  searchBy: string = 'name';
 
   //thead
   columns: ITableColumn[] = this.configService.orderTableColumns;
@@ -61,25 +62,30 @@ export class OrderComponent implements OnInit {
 
   removeBill(order: Order): void {
     if (confirm('Are you sure?')) {
-      this.orderService
-        .remove(order)
-        .subscribe(() =>
-          this.orderService.getAll().subscribe(orders =>{
-            this.toastr.error('Order deleted successfully!', 'Order deleted!', { timeOut: 3000 });
-            this.orderList = orders;
-          })
-        );
+      this.orderService.remove(order).subscribe(() =>
+        this.orderService.getAll().subscribe((orders) => {
+          this.toastr.error('Order deleted successfully!', 'Order deleted!', {
+            timeOut: 3000,
+          });
+          this.orderList = orders;
+        })
+      );
     }
   }
 
-  setSort(key:string): void {
-    if(key === this.sortKey) {
+  setSort(key: string): void {
+    if (key === this.sortKey) {
       this.sortDirection *= -1;
     }
     this.sortKey = key;
   }
 
-  onSearch(event:any) : void {
+  onSearch(event: any): void {
     this.searchPhrase = event.target.value;
+  }
+
+  //Drag and Drop
+  drop(event: CdkDragDrop<{ title: string; key: string }[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 }
