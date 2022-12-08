@@ -26,6 +26,9 @@ export class BilleditorComponent implements OnInit {
   bill: Bill = new Bill();
   orders: Order[] = [];
 
+  //loading button
+  loading = true;
+
   constructor() {}
 
   statusList: any[] = [
@@ -64,5 +67,9 @@ export class BilleditorComponent implements OnInit {
         this.router.navigate(['/bill']);
       });
     }
+  }
+
+  onLoading(): void {
+    this.loading = false;
   }
 }

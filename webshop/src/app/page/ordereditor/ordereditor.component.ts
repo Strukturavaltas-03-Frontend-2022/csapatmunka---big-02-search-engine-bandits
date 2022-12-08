@@ -37,6 +37,9 @@ export class OrdereditorComponent implements OnInit {
 
   order: Order = new Order();
 
+  //loading button
+  loading = true;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -75,5 +78,9 @@ export class OrdereditorComponent implements OnInit {
         this.router.navigate(['/order']);
       });
     }
+  }
+
+  onLoading(): void {
+    this.loading = false;
   }
 }
